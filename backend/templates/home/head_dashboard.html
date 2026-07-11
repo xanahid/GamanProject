@@ -1,0 +1,333 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "داشبورد مدیریتی" %} — {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section style="padding:48px 0 100px;position:relative;overflow:hidden;min-height:100vh;">
+  <div class="glow-teal" style="top:-100px;right:-200px;opacity:0.3;"></div>
+  <div class="glow-amber" style="bottom:0;left:-100px;opacity:0.2;"></div>
+
+  <div class="section" style="position:relative;z-index:1;">
+
+    <!-- Header -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:40px;">
+      <div>
+        <div class="pill pill-teal" style="margin-bottom:12px;">{% trans "پنل مدیریت" %}</div>
+        <h1 style="font-size:2rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:6px;">{% trans "داشبورد دکتر اکبرزاده" %}</h1>
+        <p style="font-size:0.875rem;color:rgba(245,240,232,0.4);">{% trans "مدیریت کامل مرکز روان‌درمانی گمان" %}</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="/admin/" target="_blank" class="btn-ghost" style="font-size:0.82rem;padding:9px 18px;">
+          ⚙ {% trans "مدیریت محتوا" %} (Admin)
+        </a>
+        <a href="/admin/content/article/add/" target="_blank" class="btn-primary" style="font-size:0.82rem;padding:9px 18px;">
+          + {% trans "افزودن مقاله" %}
+        </a>
+      </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px;">
+      {% with therapists|length as t_count %}
+      <div class="glass" style="border-radius:16px;padding:20px;">
+        <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#F5F0E8,#2DD4AC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">{{ t_count }}</div>
+        <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "درمانگر فعال" %}</div>
+      </div>
+      {% endwith %}
+      <div class="glass" style="border-radius:16px;padding:20px;">
+        <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#F5F0E8,#E8B84B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">{{ recent_bookings|length }}</div>
+        <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "جلسه تأیید شده اخیر" %}</div>
+      </div>
+      <div class="glass" style="border-radius:16px;padding:20px;">
+        <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#F5F0E8,#2DD4AC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">{{ recent_notes|length }}</div>
+        <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "یادداشت اخیر" %}</div>
+      </div>
+      <div class="glass" style="border-radius:16px;padding:20px;">
+        <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#F5F0E8,#E8B84B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">{{ articles|length }}</div>
+        <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "مقاله منتشر شده" %}</div>
+      </div>
+    </div>
+
+    <!-- Main grid: therapists list + tabs -->
+    <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;align-items:start;">
+
+      <!-- Sidebar: therapist list -->
+      <div class="glass-strong" style="border-radius:20px;overflow:hidden;position:sticky;top:80px;">
+        <div style="padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);">{% trans "درمانگران" %}</div>
+        </div>
+        <div id="therapistList">
+          {% for t in therapists %}
+          <button
+            onclick="selectTherapist('{{ t.pk }}', '{{ t.user.get_full_name }}')"
+            id="t-btn-{{ t.pk }}"
+            style="width:100%;text-align:right;padding:14px 20px;background:none;border:none;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;font-family:inherit;transition:background 0.2s;display:flex;align-items:center;gap:12px;"
+            onmouseover="this.style.background='rgba(255,255,255,0.04)'"
+            onmouseout="if(currentTherapist!='{{ t.pk }}') this.style.background='none'">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(45,212,172,0.1);border:1px solid rgba(45,212,172,0.2);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">
+              {% if t.photo %}<img src="{{ t.photo.url }}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">{% else %}👤{% endif %}
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:0.85rem;font-weight:600;color:#F5F0E8;">{{ t.user.get_full_name }}</div>
+              <div style="font-size:0.72rem;color:rgba(245,240,232,0.35);margin-top:2px;">
+                {% if t.is_head_of_institute %}{% trans "مدیر مرکز" %}{% else %}{{ t.specialties.first.name|default:"درمانگر" }}{% endif %}
+              </div>
+            </div>
+            {% if t.is_head_of_institute %}
+            <span style="margin-right:auto;font-size:0.65rem;padding:2px 8px;border-radius:100px;background:rgba(232,184,75,0.15);border:1px solid rgba(232,184,75,0.3);color:#E8B84B;">مدیر</span>
+            {% endif %}
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Main panel: tabs -->
+      <div>
+        <!-- Tab bar -->
+        <div style="display:flex;gap:4px;margin-bottom:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:4px;">
+          {% for tab_id, tab_label in tabs %}
+          <button onclick="switchTab('{{ tab_id }}')" id="tab-{{ tab_id }}"
+            style="flex:1;padding:9px 14px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;transition:all 0.2s;
+              {% if forloop.first %}background:rgba(45,212,172,0.15);color:#2DD4AC;border:1px solid rgba(45,212,172,0.25);{% else %}background:none;color:rgba(245,240,232,0.4);{% endif %}">
+            {{ tab_label }}
+          </button>
+          {% empty %}
+          <button onclick="switchTab('schedule')" id="tab-schedule" style="flex:1;padding:9px 14px;border-radius:8px;border:1px solid rgba(45,212,172,0.25);cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;background:rgba(45,212,172,0.15);color:#2DD4AC;">{% trans "برنامه جلسات" %}</button>
+          <button onclick="switchTab('notes')" id="tab-notes" style="flex:1;padding:9px 14px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:0.82rem;background:none;color:rgba(245,240,232,0.4);">{% trans "یادداشت‌ها" %}</button>
+          <button onclick="switchTab('bookings')" id="tab-bookings" style="flex:1;padding:9px 14px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:0.82rem;background:none;color:rgba(245,240,232,0.4);">{% trans "جلسات" %}</button>
+          <button onclick="switchTab('articles')" id="tab-articles" style="flex:1;padding:9px 14px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;font-size:0.82rem;background:none;color:rgba(245,240,232,0.4);">{% trans "مقالات" %}</button>
+          {% endfor %}
+        </div>
+
+        <!-- No therapist selected -->
+        <div id="no-selection" class="glass" style="border-radius:20px;padding:48px;text-align:center;">
+          <div style="font-size:2rem;margin-bottom:12px;">👆</div>
+          <div style="font-size:0.9rem;color:rgba(245,240,232,0.4);">{% trans "یک درمانگر را از فهرست سمت راست انتخاب کنید" %}</div>
+        </div>
+
+        <!-- Schedule tab -->
+        <div id="panel-schedule" style="display:none;">
+          <div class="glass-strong" style="border-radius:20px;overflow:hidden;min-height:480px;">
+            <div style="padding:20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);" id="scheduleTitle">{% trans "برنامه جلسات" %}</span>
+              <a id="scheduleLink" href="#" class="btn-ghost" style="font-size:0.78rem;padding:7px 14px;">{% trans "مشاهده برنامه کامل" %}</a>
+            </div>
+            <div id="scheduleEmbed" style="padding:24px;">
+              <div style="text-align:center;color:rgba(245,240,232,0.25);font-size:0.875rem;padding:60px 0;">{% trans "درمانگری انتخاب نشده." %}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes tab -->
+        <div id="panel-notes" style="display:none;">
+          <div class="glass-strong" style="border-radius:20px;overflow:hidden;">
+            <div style="padding:20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+              <span style="font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);">{% trans "یادداشت‌های جلسات" %}</span>
+            </div>
+            <div id="notesContent" style="padding:0;">
+              {% if recent_notes %}
+                {% for note in recent_notes %}
+                <div class="note-row" data-therapist="{{ note.therapist.pk }}"
+                  style="padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <div style="display:flex;gap:10px;align-items:center;">
+                      <span style="font-size:0.85rem;font-weight:600;color:#F5F0E8;">{{ note.client.get_full_name }}</span>
+                      <span style="font-size:0.72rem;color:rgba(245,240,232,0.35);">→ {{ note.therapist.user.get_full_name }}</span>
+                    </div>
+                    <span style="font-size:0.72rem;color:rgba(245,240,232,0.3);direction:ltr;">{{ note.created_at|date:"Y/m/d" }}</span>
+                  </div>
+                  <p style="font-size:0.85rem;color:rgba(245,240,232,0.55);line-height:1.8;">{{ note.content|truncatewords:25 }}</p>
+                </div>
+                {% endfor %}
+              {% else %}
+                <div style="padding:48px;text-align:center;color:rgba(245,240,232,0.25);font-size:0.875rem;">{% trans "هنوز یادداشتی ثبت نشده است." %}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Bookings tab -->
+        <div id="panel-bookings" style="display:none;">
+          <div class="glass-strong" style="border-radius:20px;overflow:hidden;">
+            <div style="padding:20px;border-bottom:1px solid rgba(255,255,255,0.07);">
+              <span style="font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);">{% trans "جلسات اخیر" %}</span>
+            </div>
+            <div id="bookingsContent">
+              {% if recent_bookings %}
+                {% for booking in recent_bookings %}
+                <div class="booking-row" data-therapist="{{ booking.therapist.pk }}"
+                  style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:16px;align-items:center;padding:14px 22px;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.85rem;">
+                  <div>
+                    <div style="font-weight:600;color:#F5F0E8;margin-bottom:2px;">{{ booking.client.get_full_name }}</div>
+                    <div style="font-size:0.72rem;color:rgba(245,240,232,0.35);">{{ booking.therapist.user.get_full_name }}</div>
+                  </div>
+                  <div style="color:rgba(245,240,232,0.5);direction:ltr;">{{ booking.slot.date }}</div>
+                  <div style="color:rgba(245,240,232,0.5);direction:ltr;">{{ booking.slot.start_time|time:"H:i" }}</div>
+                  <span style="font-size:0.72rem;padding:3px 10px;border-radius:100px;background:rgba(45,212,172,0.1);border:1px solid rgba(45,212,172,0.25);color:#2DD4AC;white-space:nowrap;">
+                    {% trans "تأیید شده" %}
+                  </span>
+                </div>
+                {% endfor %}
+              {% else %}
+                <div style="padding:48px;text-align:center;color:rgba(245,240,232,0.25);font-size:0.875rem;">{% trans "هنوز جلسه‌ای ثبت نشده است." %}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Articles tab -->
+        <div id="panel-articles" style="display:none;">
+          <div class="glass-strong" style="border-radius:20px;overflow:hidden;">
+            <div style="padding:20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);">{% trans "مقالات" %}</span>
+              <a href="/admin/content/article/add/" target="_blank" class="btn-primary" style="font-size:0.78rem;padding:7px 14px;">+ {% trans "افزودن مقاله" %}</a>
+            </div>
+            {% if articles %}
+              {% for article in articles %}
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,0.05);">
+                <div>
+                  <div style="font-size:0.9rem;font-weight:600;color:#F5F0E8;margin-bottom:3px;">{{ article.title }}</div>
+                  <div style="font-size:0.75rem;color:rgba(245,240,232,0.35);">{{ article.published_at|date:"Y/m/d" }} — {% if article.is_published %}{% trans "منتشر شده" %}{% else %}{% trans "پیش‌نویس" %}{% endif %}</div>
+                </div>
+                <div style="display:flex;gap:8px;">
+                  <a href="{{ article.get_absolute_url }}" target="_blank" class="btn-ghost" style="font-size:0.75rem;padding:6px 12px;">{% trans "مشاهده" %}</a>
+                  <a href="/admin/content/article/{{ article.pk }}/change/" target="_blank" class="btn-ghost" style="font-size:0.75rem;padding:6px 12px;">{% trans "ویرایش" %}</a>
+                </div>
+              </div>
+              {% endfor %}
+            {% else %}
+              <div style="padding:48px;text-align:center;color:rgba(245,240,232,0.25);font-size:0.875rem;">{% trans "هنوز مقاله‌ای منتشر نشده." %}</div>
+            {% endif %}
+            <div style="padding:16px 22px;">
+              <a href="/admin/content/article/" target="_blank" style="font-size:0.8rem;color:rgba(245,240,232,0.35);text-decoration:none;">{% trans "مشاهده همه مقالات در Admin →" %}</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+var currentTherapist = null;
+var currentTab = null;
+var tabs = ['schedule','notes','bookings','articles'];
+
+function switchTab(tabId) {
+  tabs.forEach(function(t) {
+    var panel = document.getElementById('panel-' + t);
+    var btn   = document.getElementById('tab-' + t);
+    if (!panel || !btn) return;
+    if (t === tabId) {
+      panel.style.display = 'block';
+      btn.style.background = 'rgba(45,212,172,0.15)';
+      btn.style.color = '#2DD4AC';
+      btn.style.border = '1px solid rgba(45,212,172,0.25)';
+    } else {
+      panel.style.display = 'none';
+      btn.style.background = 'none';
+      btn.style.color = 'rgba(245,240,232,0.4)';
+      btn.style.border = 'none';
+    }
+  });
+  document.getElementById('no-selection').style.display = 'none';
+  currentTab = tabId;
+}
+
+function selectTherapist(id, name) {
+  currentTherapist = id;
+
+  // Highlight selected button
+  document.querySelectorAll('#therapistList button').forEach(function(btn) {
+    btn.style.background = 'none';
+  });
+  var active = document.getElementById('t-btn-' + id);
+  if (active) active.style.background = 'rgba(45,212,172,0.07)';
+
+  // Update schedule link
+  var link = document.getElementById('scheduleLink');
+  var title = document.getElementById('scheduleTitle');
+  if (link) link.href = '/schedule/book/' + id + '/';
+  if (title) title.textContent = name + ' — {% trans "برنامه جلسات" %}';
+
+  // Filter notes by therapist
+  document.querySelectorAll('.note-row').forEach(function(row) {
+    row.style.display = row.dataset.therapist === id ? 'block' : 'none';
+  });
+
+  // Filter bookings by therapist
+  document.querySelectorAll('.booking-row').forEach(function(row) {
+    row.style.display = row.dataset.therapist === id ? 'grid' : 'none';
+  });
+
+  // Load schedule for this therapist via the schedule embed
+  loadScheduleEmbed(id, name);
+
+  // Switch to schedule tab if no tab active yet
+  if (!currentTab) switchTab('schedule');
+  else switchTab(currentTab);
+}
+
+function loadScheduleEmbed(therapistId, name) {
+  var embed = document.getElementById('scheduleEmbed');
+  var today = new Date();
+  var dateStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+
+  embed.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(245,240,232,0.3);font-size:0.875rem;">{% trans "در حال بارگذاری برنامه…" %}</div>';
+
+  fetch('/api/v1/scheduling/therapists/' + therapistId + '/day/?date=' + dateStr, { credentials: 'same-origin' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data.slots || data.slots.length === 0) {
+        embed.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(245,240,232,0.25);font-size:0.875rem;">{% trans "این روز برنامه‌ای ثبت نشده است." %}</div>';
+        return;
+      }
+      var html = '<div style="font-size:0.8rem;color:rgba(245,240,232,0.3);margin-bottom:16px;direction:ltr;">' + dateStr + '</div>';
+      html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+      data.slots.forEach(function(slot) {
+        var colors = {
+          free:             { bg: 'rgba(255,255,255,0.04)', border: 'rgba(255,255,255,0.10)', color: 'rgba(245,240,232,0.6)', label: '{% trans "آزاد" %}' },
+          pending_payment:  { bg: 'rgba(232,184,75,0.08)', border: 'rgba(232,184,75,0.3)',  color: '#E8B84B', label: '{% trans "در انتظار پرداخت" %}' },
+          booked:           { bg: 'rgba(45,212,172,0.08)', border: 'rgba(45,212,172,0.25)', color: '#2DD4AC', label: '{% trans "رزرو شده" %}' },
+        };
+        var c = colors[slot.status] || colors.free;
+        html += '<div style="display:grid;grid-template-columns:80px 1fr;gap:10px;align-items:center;">'
+          + '<div style="font-size:0.72rem;color:rgba(245,240,232,0.3);text-align:center;font-family:monospace;direction:ltr;">' + (slot.start_time||'').slice(0,5) + '</div>'
+          + '<div style="padding:11px 14px;border-radius:10px;background:' + c.bg + ';border:1px solid ' + c.border + ';font-size:0.83rem;color:' + c.color + ';display:flex;justify-content:space-between;align-items:center;">'
+          + '<span>' + (slot.patient_name || c.label) + '</span>'
+          + '</div>'
+          + '</div>';
+      });
+      html += '</div>';
+      embed.innerHTML = html;
+    })
+    .catch(function() {
+      embed.innerHTML = '<div style="text-align:center;padding:40px;color:#fca5a5;font-size:0.875rem;">{% trans "خطا در بارگذاری برنامه." %}</div>';
+    });
+}
+
+// Init: show first tab buttons
+document.addEventListener('DOMContentLoaded', function() {
+  // Set up tab buttons (they may be created by the empty tag loop)
+  var tabDefs = [
+    ['schedule', '{% trans "برنامه جلسات" %}'],
+    ['notes',    '{% trans "یادداشت‌ها" %}'],
+    ['bookings', '{% trans "جلسات" %}'],
+    ['articles', '{% trans "مقالات" %}'],
+  ];
+  var tabBar = document.querySelector('[id^="tab-schedule"]')?.parentElement;
+  if (tabBar && !document.getElementById('tab-schedule')) {
+    tabBar.innerHTML = tabDefs.map(function(t, i) {
+      return '<button onclick="switchTab(\'' + t[0] + '\')" id="tab-' + t[0] + '" style="flex:1;padding:9px 14px;border-radius:8px;border:' + (i===0 ? '1px solid rgba(45,212,172,0.25)' : 'none') + ';cursor:pointer;font-family:inherit;font-size:0.82rem;font-weight:600;transition:all 0.2s;background:' + (i===0 ? 'rgba(45,212,172,0.15)' : 'none') + ';color:' + (i===0 ? '#2DD4AC' : 'rgba(245,240,232,0.4)') + ';">' + t[1] + '</button>';
+    }).join('');
+  }
+});
+</script>
+{% endblock %}

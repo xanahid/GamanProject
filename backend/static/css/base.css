@@ -1,0 +1,18 @@
+/* Small refinements layered on top of Tailwind's CDN build. */
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #f1efe9; }
+::-webkit-scrollbar-thumb { background: #d3d1c7; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #aaa89c; }
+
+[dir="rtl"] .ltr-nums { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+.fade-in { animation: fadeIn 0.4s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-fade { transition: opacity 0.6s ease; }
+
+/* React widget mount points should never show layout jump before hydration */
+[data-widget-root] {
+  min-height: 480px;
+}

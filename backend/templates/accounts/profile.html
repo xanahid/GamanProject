@@ -1,0 +1,105 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block title %}{% trans "پروفایل من" %} — {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section style="padding:60px 0 100px;position:relative;overflow:hidden;">
+  <div class="glow-teal" style="top:-100px;{% if SITE_DIR == 'rtl' %}right:-200px{% else %}left:-200px{% endif %};opacity:0.4;"></div>
+  <div class="section" style="max-width:800px;position:relative;z-index:1;">
+    <div style="margin-bottom:40px;">
+      <div class="pill pill-teal" style="margin-bottom:12px;">{% trans "حساب کاربری" %}</div>
+      <h1 style="font-size:2rem;font-weight:800;">{% trans "پروفایل من" %}</h1>
+    </div>
+    <div id="dashboardRoot">
+      <!-- Skeletons -->
+      {% for i in "123" %}
+      <div class="glass" style="border-radius:20px;height:100px;margin-bottom:14px;animation:pulse 1.5s ease infinite;">
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<style>
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.status-confirmed { background:rgba(45,212,172,0.12);border:1px solid rgba(45,212,172,0.25);color:var(--teal); }
+.status-cancelled { background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:#fca5a5; }
+.status-pending   { background:rgba(232,184,75,0.1);border:1px solid rgba(232,184,75,0.25);color:var(--amber); }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+var statusLabel = {
+  confirmed: '{% trans "تأیید شده" %}',
+  awaiting_payment: '{% trans "در انتظار پرداخت" %}',
+  cancelled_by_client: '{% trans "لغو توسط شما" %}',
+  cancelled_by_therapist: '{% trans "لغو توسط درمانگر" %}',
+  completed: '{% trans "برگزار شده" %}',
+};
+var statusCls = {
+  confirmed: 'status-confirmed',
+  awaiting_payment: 'status-pending',
+  cancelled_by_client: 'status-cancelled',
+  cancelled_by_therapist: 'status-cancelled',
+  completed: 'status-confirmed',
+};
+
+function card(children, style) {
+  return '<div class="glass" style="border-radius:20px;padding:24px;margin-bottom:14px;' + (style||'') + '">' + children + '</div>';
+}
+function label(text) {
+  return '<div style="font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-bottom:12px;">' + text + '</div>';
+}
+
+async function load() {
+  var root = document.getElementById('dashboardRoot');
+  try {
+    var [d, c, b] = await Promise.all([
+      fetch('/api/v1/accounts/me/dashboard/', {credentials:'same-origin'}).then(r=>r.json()),
+      fetch('/api/v1/accounts/me/cards/', {credentials:'same-origin'}).then(r=>r.json()),
+      fetch('/api/v1/scheduling/my-bookings/', {credentials:'same-origin'}).then(r=>r.json()),
+    ]);
+
+    var upcoming = d.upcoming_session
+      ? '<div style="font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:4px;">' + d.upcoming_session.therapist_name + '</div>'
+        + '<div style="font-size:0.83rem;color:rgba(245,240,232,0.45);" class="ltr">' + d.upcoming_session.date + ' — ' + d.upcoming_session.start_time.slice(0,5) + '</div>'
+        + (d.upcoming_session.is_weekly_recurring ? '<span class="pill pill-teal" style="margin-top:10px;font-size:0.7rem;display:inline-block;">{% trans "رزرو ثابت هفتگی" %}</span>' : '')
+        + '<a href="/schedule/book/" class="btn-primary" style="margin-top:14px;display:inline-flex;font-size:0.82rem;padding:9px 20px;">{% trans "رزرو جلسه جدید" %}</a>'
+      : '<p style="color:rgba(245,240,232,0.35);font-size:0.875rem;margin-bottom:14px;">{% trans "هنوز جلسه‌ای رزرو نشده." %}</p>'
+        + '<a href="/schedule/book/" class="btn-primary" style="display:inline-flex;font-size:0.82rem;padding:9px 20px;">{% trans "رزرو اولین جلسه" %}</a>';
+
+    var rec = d.recommended_therapist
+      ? card(label('{% trans "درمانگر پیشنهادی" %}')
+          + '<div style="font-weight:700;color:var(--cream);margin-bottom:10px;">' + d.recommended_therapist.name + '</div>'
+          + '<a href="/schedule/book/' + d.recommended_therapist.id + '/" class="btn-ghost" style="font-size:0.82rem;padding:8px 18px;">{% trans "رزرو جلسه" %}</a>')
+      : '';
+
+    var cardsHtml = (c.length ? c.map(function(card_) {
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid var(--glass-border);margin-bottom:8px;">'
+        + '<span style="font-size:0.85rem;font-family:monospace;color:var(--cream);" class="ltr">' + card_.masked_pan + '</span>'
+        + '<span style="font-size:0.75rem;color:rgba(245,240,232,0.4);">' + (card_.bank_name||'') + '</span>'
+        + (card_.is_default ? '<span class="pill pill-teal" style="font-size:0.65rem;">{% trans "پیش‌فرض" %}</span>' : '')
+        + '</div>';
+    }).join('') : '<p style="color:rgba(245,240,232,0.3);font-size:0.83rem;">{% trans "پس از اولین پرداخت، کارت ذخیره می‌شود." %}</p>');
+
+    var bookingsHtml = (b.length ? b.slice(0,12).map(function(bk) {
+      var cls = statusCls[bk.status] || 'status-pending';
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid var(--glass-border);margin-bottom:8px;gap:12px;flex-wrap:wrap;">'
+        + '<span style="font-size:0.875rem;font-weight:600;color:var(--cream);">' + bk.therapist_name + '</span>'
+        + '<span style="font-size:0.78rem;color:rgba(245,240,232,0.4);" class="ltr">' + bk.date + ' ' + bk.start_time.slice(0,5) + '</span>'
+        + '<span style="font-size:0.72rem;padding:4px 10px;border-radius:100px;" class="' + cls + '">' + (statusLabel[bk.status]||bk.status) + '</span>'
+        + '</div>';
+    }).join('') : '<p style="color:rgba(245,240,232,0.3);font-size:0.83rem;">{% trans "هنوز جلسه‌ای ثبت نشده." %}</p>');
+
+    root.innerHTML =
+      card(label('{% trans "جلسه پیش‌رو" %}') + upcoming) +
+      rec +
+      card(label('{% trans "کارت‌های ذخیره‌شده" %} (' + c.length + '/5)') + cardsHtml) +
+      card(label('{% trans "تاریخچه جلسات" %}') + bookingsHtml);
+  } catch(err) {
+    root.innerHTML = '<div style="color:#fca5a5;font-size:0.875rem;padding:20px;background:rgba(239,68,68,0.1);border-radius:16px;border:1px solid rgba(239,68,68,0.2);">{% trans "خطا در بارگذاری. صفحه را رفرش کنید." %}</div>';
+  }
+}
+load();
+</script>
+{% endblock %}

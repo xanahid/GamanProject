@@ -1,0 +1,87 @@
+version: "3.9"
+
+# ─── shared configuration ────────────────────────────────────────────────────
+x-backend: &backend
+  build:
+    context: ./backend
+    dockerfile: Dockerfile
+  env_file: ./backend/.env
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_started
+  volumes:
+    - ./backend:/app          # live-reload in development (remove in prod)
+    - media_volume:/app/media
+
+# ─── services ────────────────────────────────────────────────────────────────
+services:
+
+  db:
+    image: postgres:16-alpine
+    env_file: ./backend/.env
+    environment:
+      POSTGRES_DB:       gaman_db
+      POSTGRES_USER:     gaman
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-gaman_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gaman -d gaman_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+
+  web:
+    <<: *backend
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "
+        python manage.py makemigrations --noinput &&
+        python manage.py migrate --noinput &&
+        python manage.py compilemessages --ignore=venv || true &&
+        python manage.py setup_periodic_tasks &&
+        python manage.py seed_demo_data &&
+        daphne -b 0.0.0.0 -p 8000 config.asgi:application
+      "
+
+  celery_worker:
+    <<: *backend
+    command: >
+      sh -c "
+        sleep 10 &&
+        celery -A config worker -l info -c 4
+      "
+
+  celery_beat:
+    <<: *backend
+    command: >
+      sh -c "
+        sleep 15 &&
+        celery -A config beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+      "
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend/static/js/widgets:/widgets_out
+    command: sh -c "cp -r /widgets/* /widgets_out/ && echo 'Frontend widgets deployed.'"
+    # This service runs once at startup to build and copy the React widget
+    # bundles into the Django static directory.  In CI/CD you'd pre-build
+    # and bake them into the backend image instead.
+
+# ─── volumes ─────────────────────────────────────────────────────────────────
+volumes:
+  postgres_data:
+  redis_data:
+  media_volume:

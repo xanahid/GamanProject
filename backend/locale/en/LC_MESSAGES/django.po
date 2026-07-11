@@ -1,0 +1,429 @@
+# English translations for Gaman
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "مرکز روان‌درمانی"
+msgstr "Psychotherapy Center"
+
+msgid "دپارتمان‌ها"
+msgstr "Departments"
+
+msgid "روش‌ها"
+msgstr "Methods"
+
+msgid "اسکیما تراپی"
+msgstr "Schema Therapy"
+
+msgid "دپارتمان‌ها"
+msgstr "Departments"
+
+msgid "زوج و خانواده"
+msgstr "Couples & Family"
+
+msgid "نوجوانان"
+msgstr "Adolescents"
+
+msgid "درمانگران"
+msgstr "Therapists"
+
+msgid "رزرو جلسه"
+msgstr "Book Session"
+
+msgid "برنامه من"
+msgstr "My Schedule"
+
+msgid "پروفایل"
+msgstr "Profile"
+
+msgid "خروج"
+msgstr "Sign Out"
+
+msgid "ورود"
+msgstr "Sign In"
+
+msgid "ثبت‌نام"
+msgstr "Sign Up"
+
+msgid "گمان فضایی است برای کشف خود، التیام زخم‌های درونی و رشد پایدار — با متخصصانی که واقعاً اهمیت می‌دهند."
+msgstr "Gaman is a space to discover yourself, heal inner wounds, and grow — with specialists who truly care."
+
+msgid "خدمات"
+msgstr "Services"
+
+msgid "جلسه فردی"
+msgstr "Individual Session"
+
+msgid "زوج‌درمانی"
+msgstr "Couples Therapy"
+
+msgid "روانشناسی نوجوان"
+msgstr "Adolescent Psychology"
+
+msgid "گمان"
+msgstr "Gaman"
+
+msgid "مقالات"
+msgstr "Articles"
+
+msgid "درباره ما"
+msgstr "About Us"
+
+msgid "پشتیبانی"
+msgstr "Support"
+
+msgid "سؤالات متداول"
+msgstr "FAQ"
+
+msgid "سیاست لغو"
+msgstr "Cancellation Policy"
+
+msgid "حریم خصوصی"
+msgstr "Privacy Policy"
+
+msgid "تهران، ایران"
+msgstr "Tehran, Iran"
+
+msgid "مرکز روان‌درمانی گمان"
+msgstr "Gaman Psychotherapy Center"
+
+# Homepage
+msgid "روان‌درمانی حرفه‌ای"
+msgstr "Professional Psychotherapy"
+
+msgid "شروع یک مسیر"
+msgstr "Begin a Journey"
+
+msgid "به سوی خودت"
+msgstr "Toward Yourself"
+
+msgid "گمان فضایی امن برای کشف خود و التیام زخم‌های درونی است، با تیمی از روانشناسان و روانپزشکان متخصص در کنار شما."
+msgstr "Gaman is a safe space for self-discovery and healing, with a team of specialist psychologists and psychiatrists by your side."
+
+msgid "رزرو اولین جلسه"
+msgstr "Book First Session"
+
+msgid "مشاهده درمانگران"
+msgstr "View Therapists"
+
+msgid "مراجع فعال"
+msgstr "Active Clients"
+
+msgid "درمانگر متخصص"
+msgstr "Specialist Therapists"
+
+msgid "رضایت مراجعین"
+msgstr "Client Satisfaction"
+
+msgid "آخرین مقاله"
+msgstr "Latest Article"
+
+msgid "بیشتر بخوانید"
+msgstr "Read More"
+
+msgid "به زودی مقاله منتشر می‌شود."
+msgstr "Articles coming soon."
+
+msgid "جلسه ارزیابی اولیه — ۵۰ دقیقه"
+msgstr "Initial Assessment Session — 50 min"
+
+msgid "اولین جلسه با دکتر اکبرزاده"
+msgstr "First session with Dr. Akbarzadeh"
+
+msgid "۵۰ دقیقه هر جلسه"
+msgstr "50 min per session"
+
+msgid "تیم ما"
+msgstr "Our Team"
+
+msgid "متخصصانی که واقعاً اهمیت می‌دهند"
+msgstr "Specialists who truly care"
+
+msgid "مشاهده همه"
+msgstr "View All"
+
+msgid "مدیر"
+msgstr "Director"
+
+msgid "مدیر مرکز"
+msgstr "Institute Director"
+
+msgid "روانپزشک — مدیر مرکز"
+msgstr "Psychiatrist — Institute Director"
+
+msgid "پروفایل"
+msgstr "Profile"
+
+msgid "به زودی"
+msgstr "Coming Soon"
+
+msgid "رویکردهای درمانی"
+msgstr "Therapeutic Approaches"
+
+msgid "روش‌های"
+msgstr "Methods of"
+
+msgid "علمی و مبتنی بر شواهد"
+msgstr "Evidence-Based Practice"
+
+msgid "آماده‌ی شروع هستید؟"
+msgstr "Ready to begin?"
+
+msgid "اولین قدم را با یک جلسه ارزیابی با دکتر اکبرزاده بردارید"
+msgstr "Take the first step with an assessment session with Dr. Akbarzadeh"
+
+msgid "به زودی اطلاعات درمانگران اضافه می‌شود."
+msgstr "Therapist information will be added soon."
+
+msgid "به زودی"
+msgstr "Coming soon"
+
+# Therapist directory
+msgid "تیم درمانی"
+msgstr "Care Team"
+
+msgid "هر درمانگر با رویکرد و حوزه تخصصی خاص خود، در کنار شماست. اولین جلسه همیشه با دکتر اکبرزاده آغاز می‌شود."
+msgstr "Each therapist brings their own specialty and approach. Your first session always begins with Dr. Akbarzadeh."
+
+msgid "سال سابقه"
+msgstr "years experience"
+
+msgid "مشاهده پروفایل"
+msgstr "View Profile"
+
+# Therapist detail
+msgid "سال سابقه"
+msgstr "Years Active"
+
+msgid "مراجع فعال"
+msgstr "Active Clients"
+
+msgid "دقیقه هر جلسه"
+msgstr "Min per Session"
+
+msgid "برای رزرو جلسه وارد شوید"
+msgstr "Sign in to book a session"
+
+# Auth
+msgid "خوش آمدید"
+msgstr "Welcome back"
+
+msgid "با ایمیل یا شماره موبایل وارد شوید"
+msgstr "Sign in with email or phone number"
+
+msgid "ورود به حساب"
+msgstr "Sign In"
+
+msgid "شماره موبایل یا ایمیل"
+msgstr "Mobile number or email"
+
+msgid "رمز عبور"
+msgstr "Password"
+
+msgid "ورود به گمان"
+msgstr "Sign in to Gaman"
+
+msgid "رمز عبور را فراموش کرده‌ام"
+msgstr "Forgot password"
+
+msgid "ایجاد حساب کاربری"
+msgstr "Create Account"
+
+msgid "اولین قدم به سوی خودت"
+msgstr "Your first step toward yourself"
+
+msgid "نام"
+msgstr "First name"
+
+msgid "نام خانوادگی"
+msgstr "Last name"
+
+msgid "سن"
+msgstr "Age"
+
+msgid "شغل"
+msgstr "Occupation"
+
+msgid "اختیاری"
+msgstr "optional"
+
+msgid "با کد کشور: +989123456789"
+msgstr "With country code: +989123456789"
+
+msgid "ایمیل"
+msgstr "Email"
+
+msgid "حداقل ۸ کاراکتر"
+msgstr "At least 8 characters"
+
+msgid "در حال ثبت‌نام…"
+msgstr "Creating account…"
+
+msgid "لطفاً همه فیلدهای اجباری را پر کنید."
+msgstr "Please fill in all required fields."
+
+msgid "سن باید بین ۱۲ و ۱۲۰ باشد."
+msgstr "Age must be between 12 and 120."
+
+msgid "رمز عبور باید حداقل ۸ کاراکتر داشته باشد."
+msgstr "Password must be at least 8 characters."
+
+msgid "حساب ساخته شد! در حال ورود…"
+msgstr "Account created! Signing in…"
+
+msgid "خطا در اتصال به سرور. اینترنت خود را بررسی کنید."
+msgstr "Connection error. Please check your internet."
+
+msgid "خطای ناشناخته"
+msgstr "Unknown error — please try again."
+
+# Profile
+msgid "حساب کاربری"
+msgstr "Account"
+
+msgid "پروفایل من"
+msgstr "My Profile"
+
+msgid "جلسه پیش‌رو"
+msgstr "Upcoming Session"
+
+msgid "رزرو ثابت هفتگی"
+msgstr "Weekly Recurring"
+
+msgid "رزرو جلسه جدید"
+msgstr "Book New Session"
+
+msgid "هنوز جلسه‌ای رزرو نشده."
+msgstr "No sessions booked yet."
+
+msgid "رزرو اولین جلسه"
+msgstr "Book First Session"
+
+msgid "درمانگر پیشنهادی شما"
+msgstr "Your Recommended Therapist"
+
+msgid "رزرو جلسه"
+msgstr "Book Session"
+
+msgid "کارت‌های ذخیره‌شده"
+msgstr "Saved Cards"
+
+msgid "پیش‌فرض"
+msgstr "Default"
+
+msgid "پس از اولین پرداخت، کارت ذخیره می‌شود."
+msgstr "Your card will be saved after your first payment."
+
+msgid "تاریخچه جلسات"
+msgstr "Session History"
+
+msgid "هنوز جلسه‌ای ثبت نشده."
+msgstr "No sessions recorded yet."
+
+msgid "خطا در بارگذاری. صفحه را رفرش کنید."
+msgstr "Error loading data. Please refresh."
+
+msgid "تأیید شده"
+msgstr "Confirmed"
+
+msgid "در انتظار پرداخت"
+msgstr "Awaiting Payment"
+
+msgid "لغو توسط شما"
+msgstr "Cancelled by you"
+
+msgid "لغو توسط درمانگر"
+msgstr "Cancelled by therapist"
+
+msgid "برگزار شده"
+msgstr "Completed"
+
+# Schedule page
+msgid "برنامه جلسات"
+msgstr "Session Schedule"
+
+msgid "برنامه جلسات من"
+msgstr "My Schedule"
+
+msgid "۵۰ دقیقه"
+msgstr "50 min"
+
+# Content
+msgid "مقاله"
+msgstr "Article"
+
+msgid "مقالات مرتبط"
+msgstr "Related Articles"
+
+msgid "بازگشت"
+msgstr "Back"
+
+msgid "می‌خواهید با این رویکرد کار کنید؟"
+msgstr "Want to work with this approach?"
+
+msgid "اولین جلسه ارزیابی را رزرو کنید"
+msgstr "Book your first assessment session"
+
+# Payment result
+msgid "پرداخت موفق"
+msgstr "Payment Successful"
+
+msgid "پرداخت ناموفق"
+msgstr "Payment Failed"
+
+msgid "جلسه رزرو شد!"
+msgstr "Session Booked!"
+
+msgid "جلسه شما با"
+msgstr "Your session with"
+
+msgid "در تاریخ"
+msgstr "on"
+
+msgid "ساعت"
+msgstr "at"
+
+msgid "تأیید و ثبت شد."
+msgstr "has been confirmed."
+
+msgid "مشاهده جلساتم"
+msgstr "View My Sessions"
+
+msgid "پرداخت ناموفق"
+msgstr "Payment Failed"
+
+msgid "پرداخت لغو شد یا بانک درخواست را رد کرد. زمان رزرو آزاد شد و می‌توانید دوباره تلاش کنید."
+msgstr "Payment was cancelled or declined by the bank. The slot has been released — please try again."
+
+msgid "تلاش مجدد"
+msgstr "Try Again"
+
+# Head dashboard
+msgid "پنل مدیریت"
+msgstr "Management Panel"
+
+msgid "داشبورد دکتر اکبرزاده"
+msgstr "Dr. Akbarzadeh's Dashboard"
+
+msgid "همه درمانگران"
+msgstr "All Therapists"
+
+msgid "یادداشت‌های درمانگر"
+msgstr "Therapist Notes"
+
+msgid "برنامه درمانگر"
+msgstr "Therapist Schedule"
+
+msgid "انتخاب درمانگر"
+msgstr "Select Therapist"
+
+msgid "مدیریت محتوا"
+msgstr "Content Management"
+
+msgid "افزودن مقاله"
+msgstr "Add Article"
+
+msgid "تنظیمات سایت"
+msgstr "Site Settings"

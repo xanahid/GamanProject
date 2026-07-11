@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block title %}{% if success %}{% trans "پرداخت موفق" %}{% else %}{% trans "پرداخت ناموفق" %}{% endif %} — {{ SITE_NAME }}{% endblock %}
+
+{% block content %}
+<section style="min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden;">
+  {% if success %}
+  <div class="glow-teal" style="top:30%;left:50%;transform:translateX(-50%);opacity:0.5;"></div>
+  {% else %}
+  <div class="glow-amber" style="top:30%;left:50%;transform:translateX(-50%);opacity:0.4;"></div>
+  {% endif %}
+
+  <div style="max-width:460px;width:100%;text-align:center;position:relative;z-index:1;">
+    <div class="glass-strong" style="border-radius:28px;padding:48px 36px;">
+      {% if success %}
+        <div style="width:72px;height:72px;background:rgba(45,212,172,0.15);border:1px solid rgba(45,212,172,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 24px;">✓</div>
+        <h1 style="font-size:1.5rem;font-weight:800;color:var(--teal);margin-bottom:12px;">{% trans "جلسه رزرو شد!" %}</h1>
+        <p style="font-size:0.9rem;color:rgba(245,240,232,0.55);line-height:1.9;margin-bottom:28px;">
+          {% trans "جلسه شما با" %} <strong style="color:var(--cream);">{{ booking.therapist.user.get_full_name }}</strong>
+          {% trans "در تاریخ" %} <span class="ltr" style="color:var(--cream);">{{ booking.slot.date }}</span>
+          {% trans "ساعت" %} <span class="ltr" style="color:var(--cream);">{{ booking.slot.start_time|time:"H:i" }}</span>
+          {% trans "تأیید و ثبت شد." %}
+        </p>
+        <a href="{% url 'accounts:profile' %}" class="btn-primary" style="width:100%;justify-content:center;padding:13px;">{% trans "مشاهده جلساتم" %}</a>
+      {% else %}
+        <div style="width:72px;height:72px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 24px;">✕</div>
+        <h1 style="font-size:1.5rem;font-weight:800;color:#fca5a5;margin-bottom:12px;">{% trans "پرداخت ناموفق" %}</h1>
+        <p style="font-size:0.9rem;color:rgba(245,240,232,0.45);line-height:1.9;margin-bottom:28px;">
+          {% if error %}{{ error }}{% else %}{% trans "پرداخت لغو شد یا بانک درخواست را رد کرد. زمان رزرو آزاد شد و می‌توانید دوباره تلاش کنید." %}{% endif %}
+        </p>
+        <a href="{% url 'scheduling:book_entry' %}" class="btn-primary" style="width:100%;justify-content:center;padding:13px;">{% trans "تلاش مجدد" %}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,376 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="{{ CURRENT_LANG }}" dir="{{ SITE_DIR }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['Vazirmatn', 'sans-serif'] },
+      colors: {
+        cream:  '#F5F0E8',
+        ink:    '#0D0D0F',
+        panel:  'rgba(255,255,255,0.06)',
+        teal: {
+          400: '#2DD4AC',
+          500: '#1AB896',
+          600: '#0F9E80',
+        },
+        amber:  '#E8B84B',
+      },
+      backdropBlur: { xs: '4px' },
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --ink: #0D0D0F;
+    --ink2: #1A1A1F;
+    --cream: #F5F0E8;
+    --cream2: #DDD8CF;
+    --teal: #2DD4AC;
+    --amber: #E8B84B;
+    --glass: rgba(255,255,255,0.055);
+    --glass-border: rgba(255,255,255,0.10);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--ink);
+    color: var(--cream);
+    direction: {{ SITE_DIR }};
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--teal); color: var(--ink); }
+
+  /* Glass card utility */
+  .glass {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .glass-strong {
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  /* Gradient text */
+  .grad-text {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .grad-text-amber {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--amber) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Ambient glow blobs */
+  .glow-teal {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,212,172,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .glow-amber {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,184,75,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ink2); }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+
+  /* Nav blur */
+  .nav-blur {
+    background: rgba(13,13,15,0.80);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  /* Dropdown */
+  .dropdown-menu {
+    background: rgba(20,20,24,0.96);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    min-width: 200px;
+    padding: 8px;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+  }
+  .dropdown-menu a {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--cream2);
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .dropdown-menu a:hover { background: var(--glass); color: var(--cream); }
+  .dropdown-menu .divider {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.3);
+    padding: 8px 12px 4px;
+    margin-top: 4px;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 24px;
+    background: var(--teal);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: #3ee8c0; transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center;
+    padding: 9px 20px;
+    background: transparent;
+    color: var(--cream2);
+    font-size: 0.875rem;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: var(--cream); background: var(--glass); }
+
+  /* Section rhythm */
+  .section { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  .section-lg { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+  /* Tag pill */
+  .pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    color: var(--cream2);
+  }
+  .pill-teal { background: rgba(45,212,172,0.15); border-color: rgba(45,212,172,0.3); color: var(--teal); }
+
+  /* Ltr numbers in RTL context */
+  .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    {% if SITE_DIR == 'rtl' %}right: 24px;{% else %}left: 24px;{% endif %}
+    background: rgba(45,212,172,0.15);
+    border: 1px solid rgba(45,212,172,0.3);
+    color: var(--teal);
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.3s;
+    pointer-events: none;
+    backdrop-filter: blur(16px);
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Fade-in animation */
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .fade-up-2 { animation: fadeUp 0.6s 0.1s ease both; }
+  .fade-up-3 { animation: fadeUp 0.6s 0.2s ease both; }
+
+  /* Input styles */
+  .field {
+    width: 100%;
+    padding: 11px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s;
+  }
+  .field:focus { border-color: rgba(45,212,172,0.5); background: rgba(255,255,255,0.08); box-shadow: 0 0 0 3px rgba(45,212,172,0.1); }
+  .field::placeholder { color: rgba(245,240,232,0.3); }
+</style>
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+  <div class="section" style="height:64px;display:flex;align-items:center;justify-content:space-between;">
+
+    <!-- Logo -->
+    <a href="{% url 'core:home' %}" style="text-decoration:none;">
+      <span style="font-size:1.4rem;font-weight:800;letter-spacing:-0.5px;" class="grad-text-amber">{{ SITE_NAME }}</span>
+      <span style="display:block;font-size:0.5rem;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,232,0.4);margin-top:-2px;">{% if CURRENT_LANG == 'fa' %}مرکز روان‌درمانی{% else %}PSYCHOTHERAPY CENTER{% endif %}</span>
+    </a>
+
+    <!-- Nav links -->
+    <div style="display:flex;align-items:center;gap:4px;">
+
+      <!-- Departments dropdown -->
+      <div style="position:relative;" class="nav-group">
+        <button onclick="toggleNav('nav-dept')" style="background:none;border:none;cursor:pointer;padding:8px 14px;border-radius:8px;color:rgba(245,240,232,0.65);font-family:inherit;font-size:0.875rem;display:flex;align-items:center;gap:5px;transition:color 0.2s;" onmouseover="this.style.color='#F5F0E8'" onmouseout="this.style.color='rgba(245,240,232,0.65)'">
+          {% trans "دپارتمان‌ها" %} <span style="font-size:0.6rem;opacity:0.5;">▾</span>
+        </button>
+        <div id="nav-dept" class="dropdown-menu" style="position:absolute;top:calc(100% + 8px);{% if SITE_DIR == 'rtl' %}right:0{% else %}left:0{% endif %};display:none;z-index:100;">
+          <div class="divider">{% trans "روش‌ها" %}</div>
+          <a href="{% url 'core:method_detail' 'schema-therapy' %}">{% trans "اسکیما تراپی" %}</a>
+          <a href="{% url 'core:method_detail' 'cbt' %}">CBT</a>
+          <div class="divider">{% trans "دپارتمان‌ها" %}</div>
+          <a href="{% url 'therapists:directory' %}?department=couples-family">{% trans "زوج و خانواده" %}</a>
+          <a href="{% url 'therapists:directory' %}?department=teens">{% trans "نوجوانان" %}</a>
+        </div>
+      </div>
+
+      <a href="{% url 'therapists:directory' %}" style="padding:8px 14px;border-radius:8px;color:rgba(245,240,232,0.65);font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#F5F0E8'" onmouseout="this.style.color='rgba(245,240,232,0.65)'">{% trans "درمانگران" %}</a>
+
+      <a href="{% url 'scheduling:book_entry' %}" style="padding:8px 14px;border-radius:8px;color:rgba(245,240,232,0.65);font-size:0.875rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#F5F0E8'" onmouseout="this.style.color='rgba(245,240,232,0.65)'">{% trans "رزرو جلسه" %}</a>
+    </div>
+
+    <!-- Right actions -->
+    <div style="display:flex;align-items:center;gap:10px;">
+      <form action="{% url 'set_language' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}">
+        <button type="submit" name="language" value="{% if CURRENT_LANG == 'fa' %}en{% else %}fa{% endif %}"
+          style="background:none;border:1px solid var(--glass-border);color:rgba(245,240,232,0.5);font-size:0.75rem;padding:6px 14px;border-radius:100px;cursor:pointer;font-family:inherit;transition:all 0.2s;"
+          onmouseover="this.style.borderColor='rgba(255,255,255,0.25)';this.style.color='#F5F0E8'"
+          onmouseout="this.style.borderColor='var(--glass-border)';this.style.color='rgba(245,240,232,0.5)'">
+          {% if CURRENT_LANG == 'fa' %}EN{% else %}FA{% endif %}
+        </button>
+      </form>
+
+      {% if user.is_authenticated %}
+        {% if user.is_therapist %}
+          {% if user.therapist_profile.is_head_of_institute %}
+            <a href="{% url 'core:head_dashboard' %}" class="btn-ghost" style="font-size:0.8rem;padding:7px 16px;background:rgba(232,184,75,0.1);border-color:rgba(232,184,75,0.3);color:#E8B84B;">✦ {% trans "پنل مدیریت" %}</a>
+          {% else %}
+            <a href="{% url 'scheduling:therapist_schedule' %}" class="btn-ghost" style="font-size:0.8rem;padding:7px 16px;">{% trans "برنامه من" %}</a>
+          {% endif %}
+        {% else %}
+          <a href="{% url 'accounts:profile' %}" class="btn-ghost" style="font-size:0.8rem;padding:7px 16px;">{% trans "پروفایل" %}</a>
+        {% endif %}
+        <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn-ghost" style="font-size:0.8rem;padding:7px 16px;">{% trans "خروج" %}</button>
+        </form>
+      {% else %}
+        <a href="{% url 'accounts:login' %}" class="btn-ghost" style="font-size:0.8rem;padding:7px 16px;">{% trans "ورود" %}</a>
+        <a href="{% url 'accounts:signup' %}" class="btn-primary" style="font-size:0.8rem;padding:7px 18px;">{% trans "ثبت‌نام" %}</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+<div style="position:fixed;top:72px;{% if SITE_DIR == 'rtl' %}right:24px{% else %}left:24px{% endif %};z-index:200;max-width:360px;">
+  {% for message in messages %}
+  <div style="background:rgba(20,20,24,0.95);border:1px solid {% if message.tags == 'error' %}rgba(239,68,68,0.4){% else %}rgba(45,212,172,0.4){% endif %};color:{% if message.tags == 'error' %}#fca5a5{% else %}var(--teal){% endif %};padding:12px 18px;border-radius:12px;font-size:0.875rem;backdrop-filter:blur(16px);margin-bottom:8px;">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<main style="padding-top:64px;">
+{% block content %}{% endblock %}
+</main>
+
+<!-- FOOTER -->
+<footer style="background:#0A0A0C;border-top:1px solid var(--glass-border);padding:64px 0 32px;">
+  <div class="section">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;">
+      <div>
+        <div style="font-size:1.4rem;font-weight:800;margin-bottom:12px;" class="grad-text-amber">{{ SITE_NAME }}</div>
+        <p style="font-size:0.875rem;line-height:1.9;color:rgba(245,240,232,0.45);max-width:260px;">{% trans "گمان فضایی است برای کشف خود، التیام زخم‌های درونی و رشد پایدار — با متخصصانی که واقعاً اهمیت می‌دهند." %}</p>
+      </div>
+      {% for group_name, links in footer_links.items %}
+      <div>
+        <div style="font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:rgba(245,240,232,0.3);margin-bottom:16px;">{{ group_name }}</div>
+        {% for label, url in links %}
+        <a href="{{ url }}" style="display:block;font-size:0.875rem;color:rgba(245,240,232,0.45);margin-bottom:10px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#F5F0E8'" onmouseout="this.style.color='rgba(245,240,232,0.45)'">{{ label }}</a>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <div style="border-top:1px solid var(--glass-border);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:0.775rem;color:rgba(245,240,232,0.3);">
+      <span>© {% now "Y" %} {% trans "مرکز روان‌درمانی گمان" %}</span>
+      <span>{% trans "تهران، ایران" %}</span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+// Nav dropdown toggle
+function toggleNav(id) {
+  const el = document.getElementById(id);
+  const isOpen = el.style.display === 'block';
+  document.querySelectorAll('.dropdown-menu').forEach(d => d.style.display = 'none');
+  el.style.display = isOpen ? 'none' : 'block';
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-group')) {
+    document.querySelectorAll('.dropdown-menu').forEach(d => d.style.display = 'none');
+  }
+});
+
+// Toast
+window.gamanToast = function(msg, ms = 3200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), ms);
+};
+
+window.getCsrfToken = function() {
+  const m = document.cookie.match(/csrftoken=([^;]+)/);
+  return m ? m[1] : '';
+};
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

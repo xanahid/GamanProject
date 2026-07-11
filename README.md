@@ -224,3 +224,12 @@ python manage.py generate_vapid_keys
 ## Language switching
 
 The site defaults to Farsi (RTL). Users switch to English via the language toggle button in the nav, which POSTs to Django's built-in `set_language` view. All user-facing strings are wrapped in `{% trans %}` / `gettext()` — run `django-admin makemessages -l en` to generate the English translation file and fill in `backend/locale/en/LC_MESSAGES/django.po`.
+
+
+
+## TO DO:
+
+1. Language switching doesnt work properly; though fixing it shouldnt take long.
+2. Payment interactions havent yet been tested completely.
+3. Further tests will be done. 
+

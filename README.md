@@ -1,6 +1,7 @@
 # گمان — Gaman Therapy Booking Platform
 A major thanks to Dr. akbarzadeh for the amazing work they're doing for the people of Iran. 
-----------------------------------------------------------------------
+
+---
 
 
 A full-stack psychotherapy session booking platform for **Gaman Institute** (مرکز روان‌درمانی گمان).

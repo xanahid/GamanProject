@@ -3,13 +3,12 @@
 {% block title %}{% trans "رزرو جلسه" %} — {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<section style="padding:60px 0 100px;position:relative;overflow:hidden;">
-  <div class="glow-teal" style="top:-80px;{% if SITE_DIR == 'rtl' %}right:-200px{% else %}left:-200px{% endif %};opacity:0.5;"></div>
+<section style="padding:var(--space-16) 0 var(--space-20);">
   <div class="section" style="max-width:900px;position:relative;z-index:1;">
 
-    <div style="margin-bottom:32px;">
-      <div class="pill pill-teal" style="margin-bottom:14px;">{% if widget_mode == 'therapist' %}{% trans "برنامه جلسات" %}{% else %}{% trans "رزرو جلسه" %}{% endif %}</div>
-      <h1 style="font-size:1.8rem;font-weight:800;margin-bottom:6px;">
+    <div style="margin-bottom:var(--space-8);">
+      <span class="pill pill-teal" style="margin-bottom:var(--space-3);">{% if widget_mode == 'therapist' %}{% trans "برنامه جلسات" %}{% else %}{% trans "رزرو جلسه" %}{% endif %}</span>
+      <h1 style="font-size:clamp(1.5rem,3vw,1.8rem);font-weight:800;margin-bottom:var(--space-2);">
         {% if widget_mode == 'therapist' %}
           {% trans "برنامه جلسات من" %}
         {% else %}
@@ -17,7 +16,7 @@
         {% endif %}
       </h1>
       {% if widget_mode == 'client' %}
-      <p style="font-size:0.875rem;color:rgba(245,240,232,0.4);">
+      <p style="font-size:0.875rem;color:var(--cream-dim);">
         {% if therapist.is_head_of_institute %}{% trans "جلسه ارزیابی اولیه — ۵۰ دقیقه" %}
         {% else %}{{ therapist.specialties.first.name|default:"" }} — {% trans "۵۰ دقیقه" %}{% endif %}
       </p>
@@ -32,27 +31,26 @@
       data-mode="{{ widget_mode }}"
       data-lang="{{ CURRENT_LANG }}"
       data-session-price="{{ session_price|default:'0' }}"
-      class="glass-strong"
-      style="border-radius:24px;overflow:hidden;min-height:500px;"
+      class="surface-elevated"
+      style="border-radius:var(--radius-2xl);overflow:hidden;min-height:500px;"
     >
       <!-- Skeleton until React hydrates -->
-      <div style="padding:32px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--glass-border);">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);"></div>
-          <div style="width:140px;height:20px;border-radius:6px;background:rgba(255,255,255,0.05);"></div>
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.05);"></div>
+      <div style="padding:var(--space-8);">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-6);padding-bottom:var(--space-5);border-bottom:1px solid var(--border);">
+          <div class="skeleton" style="width:36px;height:36px;border-radius:var(--radius-md);"></div>
+          <div class="skeleton" style="width:140px;height:20px;border-radius:var(--radius-sm);"></div>
+          <div class="skeleton" style="width:36px;height:36px;border-radius:var(--radius-md);"></div>
         </div>
         {% for i in "12345678" %}
-        <div style="display:grid;grid-template-columns:80px 1fr;gap:12px;margin-bottom:10px;align-items:center;">
-          <div style="height:14px;border-radius:4px;background:rgba(255,255,255,0.04);"></div>
-          <div style="height:52px;border-radius:12px;background:rgba(255,255,255,0.04);animation:pulse 1.5s ease infinite;animation-delay:{{ forloop.counter0|add:'0' }}00ms;"></div>
+        <div style="display:grid;grid-template-columns:80px 1fr;gap:var(--space-3);margin-bottom:var(--space-3);align-items:center;">
+          <div class="skeleton" style="height:14px;border-radius:var(--radius-sm);"></div>
+          <div class="skeleton" style="height:52px;border-radius:var(--radius-lg);"></div>
         </div>
         {% endfor %}
       </div>
     </div>
   </div>
 </section>
-<style>@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }</style>
 {% endblock %}
 
 {% block extra_js %}

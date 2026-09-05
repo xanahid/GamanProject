@@ -3,44 +3,43 @@
 {% block title %}{% trans "درمانگران گمان" %} — {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<section style="padding:80px 0;position:relative;overflow:hidden;">
-  <div class="glow-teal" style="top:-100px;{% if SITE_DIR == 'rtl' %}right:-200px{% else %}left:-200px{% endif %};"></div>
-  <div class="section" style="position:relative;z-index:1;">
-    <div style="margin-bottom:56px;">
-      <div class="pill pill-teal" style="margin-bottom:14px;">{% trans "تیم درمانی" %}</div>
-      <h1 style="font-size:2.4rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:10px;">{% trans "درمانگران" %} <span class="grad-text">{% trans "گمان" %}</span></h1>
-      <p style="font-size:0.95rem;color:rgba(245,240,232,0.45);max-width:520px;line-height:1.8;">{% trans "هر درمانگر با رویکرد و حوزه تخصصی خاص خود، در کنار شماست. اولین جلسه همیشه با دکتر اکبرزاده آغاز می‌شود." %}</p>
+<section style="padding:var(--space-16) 0 var(--space-20);">
+  <div class="section">
+    <div style="margin-bottom:var(--space-12);">
+      <span class="pill pill-teal" style="margin-bottom:var(--space-3);">{% trans "تیم درمانی" %}</span>
+      <h1 style="font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-3);">{% trans "درمانگران" %} <span style="color:var(--teal);">{% trans "گمان" %}</span></h1>
+      <p style="font-size:0.95rem;color:var(--cream-dim);max-width:520px;line-height:1.8;">{% trans "هر درمانگر با رویکرد و حوزه تخصصی خاص خود، در کنار شماست. اولین جلسه همیشه با دکتر اکبرزاده آغاز می‌شود." %}</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:var(--space-5);">
       {% for t in therapists %}
-      <a href="{% url 'therapists:detail' t.pk %}" style="text-decoration:none;display:block;border-radius:24px;overflow:hidden;transition:transform 0.25s;" class="glass" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-        <div style="height:220px;background:linear-gradient(135deg,rgba(45,212,172,0.08),rgba(232,184,75,0.06));display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden;">
+      <a href="{% url 'therapists:detail' t.pk %}" style="text-decoration:none;display:block;border-radius:var(--radius-2xl);overflow:hidden;transition:transform var(--transition-base), box-shadow var(--transition-base);" class="surface" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+        <div style="height:220px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:4.5rem;position:relative;overflow:hidden;">
           {% if t.photo %}
           <img src="{{ t.photo.url }}" style="width:100%;height:100%;object-fit:cover;" alt="{{ t.user.get_full_name }}">
-          {% else %}<span>👤</span>{% endif %}
+          {% else %}<span aria-hidden="true">👤</span>{% endif %}
           {% if t.is_head_of_institute %}
-          <div style="position:absolute;top:12px;{% if SITE_DIR == 'rtl' %}right:12px{% else %}left:12px{% endif %};">
-            <span class="pill" style="background:rgba(232,184,75,0.2);border-color:rgba(232,184,75,0.35);color:var(--amber);font-size:0.65rem;">✦ {% trans "مدیر مرکز" %}</span>
+          <div style="position:absolute;top:var(--space-3);{% if SITE_DIR == 'rtl' %}right:var(--space-3){% else %}left:var(--space-3){% endif %};">
+            <span class="pill pill-amber" style="font-size:0.65rem;">✦ {% trans "مدیر مرکز" %}</span>
           </div>
           {% endif %}
         </div>
-        <div style="padding:24px;">
-          <div style="font-weight:700;font-size:1rem;color:var(--cream);margin-bottom:8px;">{{ t.user.get_full_name }}</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+        <div style="padding:var(--space-6);">
+          <div style="font-weight:700;font-size:1.05rem;color:var(--cream);margin-bottom:var(--space-2);">{{ t.user.get_full_name }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);margin-bottom:var(--space-3);">
             {% for s in t.specialties.all %}
             <span class="pill pill-teal" style="font-size:0.7rem;">{{ s.name }}</span>
             {% endfor %}
           </div>
-          <p style="font-size:0.83rem;line-height:1.8;color:rgba(245,240,232,0.4);margin-bottom:16px;">{{ t.short_bio }}</p>
-          <div style="display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-size:0.78rem;color:rgba(245,240,232,0.25);">{{ t.years_active }} {% trans "سال سابقه" %}</span>
+          <p style="font-size:0.85rem;line-height:1.8;color:var(--cream-dim);margin-bottom:var(--space-4);">{{ t.short_bio }}</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding-top:var(--space-3);border-top:1px solid var(--border);">
+            <span style="font-size:0.78rem;color:var(--cream-dim-3);">{{ t.years_active }} {% trans "سال سابقه" %}</span>
             <span style="font-size:0.8rem;color:var(--teal);">{% trans "مشاهده پروفایل" %} ›</span>
           </div>
         </div>
       </a>
       {% empty %}
-      <p style="color:rgba(245,240,232,0.3);grid-column:1/-1;text-align:center;padding:60px 0;font-size:0.9rem;">{% trans "به زودی اطلاعات درمانگران اضافه می‌شود." %}</p>
+      <p style="color:var(--cream-dim-3);grid-column:1/-1;text-align:center;padding:var(--space-16) 0;font-size:0.9rem;">{% trans "به زودی اطلاعات درمانگران اضافه می‌شود." %}</p>
       {% endfor %}
     </div>
   </div>

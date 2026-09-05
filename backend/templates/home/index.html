@@ -5,95 +5,88 @@
 {% block content %}
 
 <!-- ── HERO ─────────────────────────────────────────────────────────────── -->
-<section style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;">
-
-  <!-- Animated gradient mesh background — the Bobbin-style "living" backdrop -->
-  <div id="heroMesh" style="position:absolute;inset:0;z-index:0;"></div>
-
-  <!-- Noise texture overlay for depth -->
-  <div style="position:absolute;inset:0;z-index:1;opacity:0.035;background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');pointer-events:none;"></div>
-
-  <div class="section" style="position:relative;z-index:1;padding-top:80px;padding-bottom:80px;width:100%;">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+<section style="padding: var(--space-20) 0 var(--space-16); position:relative;">
+  <div class="section" style="position:relative;z-index:1;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-16);align-items:center;max-width:1160px;margin:0 auto;padding:0 24px;">
 
       <!-- Left: copy -->
       <div>
-        <div class="pill pill-teal fade-up" style="margin-bottom:20px;">{% trans "روان‌درمانی حرفه‌ای" %}</div>
-        <h1 class="fade-up-2" style="font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;line-height:1.15;letter-spacing:-1px;margin-bottom:20px;">
+        <span class="pill pill-teal fade-up" style="margin-bottom:var(--space-4);">{% trans "روان‌درمانی حرفه‌ای" %}</span>
+        <h1 class="fade-up-2" style="font-size:clamp(2.2rem,4.5vw,3.2rem);font-weight:800;line-height:1.15;letter-spacing:-0.02em;margin-bottom:var(--space-4);color:var(--cream);">
           {% trans "شروع یک مسیر" %}<br>
-          <span class="grad-text">{% trans "به سوی خودت" %}</span>
+          <span style="color:var(--teal);">{% trans "به سوی خودت" %}</span>
         </h1>
-        <p class="fade-up-3" style="font-size:1.05rem;line-height:1.9;color:rgba(245,240,232,0.6);margin-bottom:36px;max-width:440px;">
+        <p class="fade-up-3" style="font-size:1rem;line-height:1.8;color:var(--cream-dim);margin-bottom:var(--space-6);max-width:460px;">
           {% trans "گمان فضایی امن برای کشف خود و التیام زخم‌های درونی است، با تیمی از روانشناسان و روانپزشکان متخصص در کنار شما." %}
         </p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;" class="fade-up-3">
-          <a href="{% url 'scheduling:book_entry' %}" class="btn-primary">
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;" class="fade-up-3">
+          <a href="{% url 'scheduling:book_entry' %}" class="btn btn-primary">
             {% trans "رزرو اولین جلسه" %}
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a href="{% url 'therapists:directory' %}" class="btn-ghost">{% trans "مشاهده درمانگران" %}</a>
+          <a href="{% url 'therapists:directory' %}" class="btn btn-ghost">{% trans "مشاهده درمانگران" %}</a>
         </div>
 
         <!-- Stats row -->
-        <div style="display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--glass-border);" class="fade-up-3">
+        <div style="display:flex;gap:var(--space-8);margin-top:var(--space-10);padding-top:var(--space-8);border-top:1px solid var(--border);" class="fade-up-3">
           <div>
-            <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber">+۲۸۰</div>
-            <div style="font-size:0.8rem;color:rgba(245,240,232,0.45);margin-top:2px;">{% trans "مراجع فعال" %}</div>
+            <div style="font-size:1.75rem;font-weight:800;color:var(--amber);" class="ltr">+۲۸۰</div>
+            <div style="font-size:0.8rem;color:var(--cream-dim-2);margin-top:var(--space-1);">{% trans "مراجع فعال" %}</div>
           </div>
-          <div style="width:1px;background:var(--glass-border);"></div>
+          <div style="width:1px;background:var(--border);"></div>
           <div>
-            <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber">{{ featured_therapists|length }}</div>
-            <div style="font-size:0.8rem;color:rgba(245,240,232,0.45);margin-top:2px;">{% trans "درمانگر متخصص" %}</div>
+            <div style="font-size:1.75rem;font-weight:800;color:var(--amber);" class="ltr">{{ featured_therapists|length }}</div>
+            <div style="font-size:0.8rem;color:var(--cream-dim-2);margin-top:var(--space-1);">{% trans "درمانگر متخصص" %}</div>
           </div>
-          <div style="width:1px;background:var(--glass-border);"></div>
+          <div style="width:1px;background:var(--border);"></div>
           <div>
-            <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber">۹۴٪</div>
-            <div style="font-size:0.8rem;color:rgba(245,240,232,0.45);margin-top:2px;">{% trans "رضایت مراجعین" %}</div>
+            <div style="font-size:1.75rem;font-weight:800;color:var(--amber);" class="ltr">۹۴٪</div>
+            <div style="font-size:0.8rem;color:var(--cream-dim-2);margin-top:var(--space-1);">{% trans "رضایت مراجعین" %}</div>
           </div>
         </div>
       </div>
 
-      <!-- Right: article slideshow card -->
+      <!-- Right: featured article card -->
       <div style="position:relative;">
-        <div class="glass-strong" style="border-radius:24px;overflow:hidden;padding:32px;">
+        <div class="surface-elevated" style="border-radius:var(--radius-2xl);overflow:hidden;padding:var(--space-8);">
           <!-- Slideshow -->
-          <div style="margin-bottom:20px;">
-            <div class="pill" style="margin-bottom:16px;font-size:0.7rem;">{% trans "آخرین مقاله" %}</div>
+          <div style="margin-bottom:var(--space-5);">
+            <span class="pill" style="margin-bottom:var(--space-4);font-size:0.7rem;">{% trans "آخرین مقاله" %}</span>
             {% for article in slideshow_articles %}
-            <div data-slide="{{ forloop.counter0 }}" style="{% if not forloop.first %}display:none;{% endif %}transition:opacity 0.5s;">
-              <h3 style="font-size:1.2rem;font-weight:700;line-height:1.5;margin-bottom:10px;color:var(--cream);">{{ article.title }}</h3>
-              <p style="font-size:0.85rem;line-height:1.8;color:rgba(245,240,232,0.5);margin-bottom:16px;">{{ article.excerpt|truncatewords:18 }}</p>
-              <a href="{{ article.get_absolute_url }}" style="font-size:0.82rem;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap 0.2s;" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
+            <div data-slide="{{ forloop.counter0 }}" style="{% if not forloop.first %}display:none;{% endif %}transition:opacity var(--transition-base);">
+              <h3 style="font-size:1.15rem;font-weight:700;line-height:1.5;margin-bottom:var(--space-3);color:var(--cream);">{{ article.title }}</h3>
+              <p style="font-size:0.875rem;line-height:1.8;color:var(--cream-dim);margin-bottom:var(--space-4);">{{ article.excerpt|truncatewords:18 }}</p>
+              <a href="{{ article.get_absolute_url }}" style="font-size:0.82rem;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap var(--transition-fast);" onmouseover="this.style.gap='10px'" onmouseout="this.style.gap='6px'">
                 {% trans "بیشتر بخوانید" %}
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
               </a>
             </div>
             {% empty %}
-            <p style="color:rgba(245,240,232,0.3);font-size:0.875rem;">{% trans "به زودی مقاله منتشر می‌شود." %}</p>
+            <p style="color:var(--cream-dim-3);font-size:0.875rem;">{% trans "به زودی مقاله منتشر می‌شود." %}</p>
             {% endfor %}
           </div>
 
           <!-- Dots -->
           {% if slideshow_articles|length > 1 %}
-          <div style="display:flex;gap:6px;margin-top:20px;" id="slideDots">
+          <div style="display:flex;gap:6px;margin-top:var(--space-5);" id="slideDots" role="tablist" aria-label="{% trans 'Article slides' %}">
             {% for a in slideshow_articles %}
-            <button data-dot="{{ forloop.counter0 }}" onclick="goSlide({{ forloop.counter0 }})"
-              style="width:{% if forloop.first %}20px{% else %}6px{% endif %};height:6px;border-radius:100px;background:{% if forloop.first %}var(--teal){% else %}rgba(255,255,255,0.2){% endif %};border:none;cursor:pointer;transition:all 0.3s;padding:0;"></button>
+            <button type="button" data-dot="{{ forloop.counter0 }}" onclick="goSlide({{ forloop.counter0 }})" role="tab" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{% trans 'Slide' %} {{ forloop.counter }}"
+              style="width:{% if forloop.first %}20px{% else %}6px{% endif %};height:6px;border-radius:var(--radius-full);background:{% if forloop.first %}var(--teal){% else %}var(--cream-dim-3){% endif %};border:none;cursor:pointer;transition:all var(--transition-base);padding:0;"></button>
             {% endfor %}
           </div>
           {% endif %}
 
           <!-- CTA -->
-          <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--glass-border);">
-            <a href="{% url 'scheduling:book_entry' %}" class="btn-primary" style="width:100%;justify-content:center;">
+          <div style="margin-top:var(--space-6);padding-top:var(--space-6);border-top:1px solid var(--border);">
+            <a href="{% url 'scheduling:book_entry' %}" class="btn btn-primary" style="width:100%;justify-content:center;">
               {% trans "رزرو اولین جلسه با دکتر اکبرزاده" %}
             </a>
-            <p style="font-size:0.75rem;color:rgba(245,240,232,0.3);text-align:center;margin-top:10px;">{% trans "جلسه ارزیابی اولیه — ۵۰ دقیقه" %}</p>
+            <p style="font-size:0.75rem;color:var(--cream-dim-3);text-align:center;margin-top:var(--space-2);">{% trans "جلسه ارزیابی اولیه — ۵۰ دقیقه" %}</p>
           </div>
         </div>
 
         <!-- Floating badge -->
-        <div class="glass" style="position:absolute;top:-16px;{% if SITE_DIR == 'rtl' %}left:-16px{% else %}right:-16px{% endif %};padding:10px 16px;border-radius:12px;font-size:0.75rem;font-weight:600;color:var(--amber);">
+        <div class="surface" style="position:absolute;top:-12px;{% if SITE_DIR == 'rtl' %}left:-12px{% else %}right:-12px{% endif %};padding:8px 14px;border-radius:var(--radius-md);font-size:0.75rem;font-weight:600;color:var(--amber);white-space:nowrap;">
           ✦ {% trans "۵۰ دقیقه هر جلسه" %}
         </div>
       </div>
@@ -102,98 +95,97 @@
 </section>
 
 <!-- ── DIVIDER ────────────────────────────────────────────────────────────── -->
-<div style="height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:0 24px;"></div>
+<hr class="divider" style="margin:0 24px;" aria-hidden="true">
 
 <!-- ── THERAPISTS ─────────────────────────────────────────────────────────── -->
-<section style="padding:100px 0;">
+<section style="padding:var(--space-20) 0;">
   <div class="section">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--space-12);flex-wrap:wrap;gap:var(--space-4);">
       <div>
-        <div class="pill" style="margin-bottom:12px;">{% trans "تیم ما" %}</div>
-        <h2 style="font-size:2rem;font-weight:800;letter-spacing:-0.5px;">{% trans "درمانگران" %} <span class="grad-text">{% trans "گمان" %}</span></h2>
-        <p style="font-size:0.9rem;color:rgba(245,240,232,0.4);margin-top:8px;">{% trans "متخصصانی که واقعاً اهمیت می‌دهند" %}</p>
+        <span class="pill" style="margin-bottom:var(--space-3);">{% trans "تیم ما" %}</span>
+        <h2 style="font-size:clamp(1.6rem,3vw,2rem);font-weight:800;letter-spacing:-0.02em;">{% trans "درمانگران" %} <span style="color:var(--teal);">{% trans "گمان" %}</span></h2>
+        <p style="font-size:0.9rem;color:var(--cream-dim);margin-top:var(--space-2);">{% trans "متخصصانی که واقعاً اهمیت می‌دهند" %}</p>
       </div>
-      <a href="{% url 'therapists:directory' %}" style="font-size:0.85rem;color:rgba(245,240,232,0.4);text-decoration:none;border-bottom:1px solid rgba(245,240,232,0.15);padding-bottom:2px;transition:color 0.2s;" onmouseover="this.style.color='#F5F0E8'" onmouseout="this.style.color='rgba(245,240,232,0.4)'">{% trans "مشاهده همه" %} ›</a>
+      <a href="{% url 'therapists:directory' %}" style="font-size:0.875rem;color:var(--cream-dim);text-decoration:none;border-bottom:1px solid var(--cream-dim-3);padding-bottom:2px;transition:color var(--transition-fast);" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim)'">{% trans "مشاهده همه" %} ›</a>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4);">
       {% for t in featured_therapists %}
-      <a href="{% url 'therapists:detail' t.pk %}" style="text-decoration:none;display:block;border-radius:20px;overflow:hidden;transition:transform 0.25s;" class="glass" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+      <a href="{% url 'therapists:detail' t.pk %}" style="text-decoration:none;display:block;border-radius:var(--radius-xl);overflow:hidden;transition:transform var(--transition-base), box-shadow var(--transition-base);" class="surface" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
         <!-- Photo area -->
-        <div style="height:180px;background:linear-gradient(135deg,rgba(45,212,172,0.1),rgba(232,184,75,0.08));display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;">
+        <div style="height:180px;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden;">
           {% if t.photo %}
           <img src="{{ t.photo.url }}" style="width:100%;height:100%;object-fit:cover;" alt="{{ t.user.get_full_name }}">
           {% else %}
-          <span style="filter:grayscale(0.2);">👤</span>
+          <span style="filter:grayscale(0.2);" aria-hidden="true">👤</span>
           {% endif %}
           {% if t.is_head_of_institute %}
-          <div style="position:absolute;top:10px;{% if SITE_DIR == 'rtl' %}right:10px{% else %}left:10px{% endif %};">
-            <span class="pill" style="background:rgba(232,184,75,0.2);border-color:rgba(232,184,75,0.4);color:var(--amber);font-size:0.65rem;">{% trans "مدیر" %}</span>
+          <div style="position:absolute;top:var(--space-3);{% if SITE_DIR == 'rtl' %}right:var(--space-3){% else %}left:var(--space-3){% endif %};">
+            <span class="pill pill-amber" style="font-size:0.65rem;">{% trans "مدیر" %}</span>
           </div>
           {% endif %}
         </div>
         <!-- Info -->
-        <div style="padding:18px;">
-          <div style="font-weight:600;font-size:0.9rem;color:var(--cream);margin-bottom:4px;">{{ t.user.get_full_name }}</div>
-          <div class="pill" style="font-size:0.7rem;margin-bottom:10px;">{{ t.specialties.first.name|default:"روانپزشک" }}</div>
-          <p style="font-size:0.78rem;line-height:1.7;color:rgba(245,240,232,0.4);">{{ t.short_bio|truncatewords:10 }}</p>
-          <div style="margin-top:12px;font-size:0.78rem;color:var(--teal);display:flex;align-items:center;gap:4px;">{% trans "پروفایل" %} <span style="font-size:0.6rem;">›</span></div>
+        <div style="padding:var(--space-5);">
+          <div style="font-weight:600;font-size:0.95rem;color:var(--cream);margin-bottom:var(--space-2);">{{ t.user.get_full_name }}</div>
+          <div class="pill pill-teal" style="font-size:0.7rem;margin-bottom:var(--space-3);">{{ t.specialties.first.name|default:"روانپزشک" }}</div>
+          <p style="font-size:0.82rem;line-height:1.8;color:var(--cream-dim);margin-bottom:var(--space-3);">{{ t.short_bio|truncatewords:10 }}</p>
+          <div style="font-size:0.8rem;color:var(--teal);display:flex;align-items:center;gap:4px;">{% trans "پروفایل" %} <span style="font-size:0.6rem;">›</span></div>
         </div>
       </a>
       {% empty %}
-      <p style="color:rgba(245,240,232,0.3);grid-column:1/-1;text-align:center;padding:40px 0;">{% trans "به زودی" %}</p>
+      <p style="color:var(--cream-dim-3);grid-column:1/-1;text-align:center;padding:var(--space-12) 0;font-size:0.9rem;">{% trans "به زودی اطلاعات درمانگران اضافه می‌شود." %}</p>
       {% endfor %}
     </div>
   </div>
 </section>
 
 <!-- ── DIVIDER ────────────────────────────────────────────────────────────── -->
-<div style="height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent);margin:0 24px;"></div>
+<hr class="divider" style="margin:0 24px;" aria-hidden="true">
 
 <!-- ── THERAPY METHODS ────────────────────────────────────────────────────── -->
-<section style="padding:100px 0;position:relative;overflow:hidden;">
-  <div class="glow-teal" style="top:50%;{% if SITE_DIR == 'rtl' %}left:50%{% else %}right:50%{% endif %};transform:translate(-50%,-50%);opacity:0.6;"></div>
-  <div class="section" style="position:relative;z-index:1;">
-    <div style="text-align:center;margin-bottom:56px;">
-      <div class="pill" style="margin-bottom:12px;">{% trans "رویکردهای درمانی" %}</div>
-      <h2 style="font-size:2rem;font-weight:800;letter-spacing:-0.5px;">{% trans "روش‌های" %} <span class="grad-text">{% trans "علمی و مبتنی بر شواهد" %}</span></h2>
+<section style="padding:var(--space-20) 0;">
+  <div class="section">
+    <div style="text-align:center;margin-bottom:var(--space-14);">
+      <span class="pill" style="margin-bottom:var(--space-3);">{% trans "رویکردهای درمانی" %}</span>
+      <h2 style="font-size:clamp(1.6rem,3vw,2rem);font-weight:800;letter-spacing:-0.02em;">{% trans "روش‌های" %} <span style="color:var(--teal);">{% trans "علمی و مبتنی بر شواهد" %}</span></h2>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4);margin-bottom:var(--space-12);">
       {% for method in therapy_methods %}
-      <div class="glass" style="border-radius:20px;padding:28px;transition:transform 0.25s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
-        <div style="width:44px;height:44px;background:rgba(45,212,172,0.12);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:16px;border:1px solid rgba(45,212,172,0.2);">{{ method.icon_emoji }}</div>
-        <h3 style="font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:8px;">{{ method.name }}</h3>
-        <p style="font-size:0.83rem;line-height:1.8;color:rgba(245,240,232,0.45);margin-bottom:16px;">{{ method.teaser|truncatewords:20 }}</p>
+      <div class="surface" style="border-radius:var(--radius-xl);padding:var(--space-6);transition:transform var(--transition-base);" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="width:44px;height:44px;background:var(--teal-dim);border:1px solid rgba(45,212,172,0.2);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:var(--space-4);" aria-hidden="true">{{ method.icon_emoji }}</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--cream);margin-bottom:var(--space-2);">{{ method.name }}</h3>
+        <p style="font-size:0.85rem;line-height:1.8;color:var(--cream-dim);margin-bottom:var(--space-4);">{{ method.teaser|truncatewords:20 }}</p>
         <a href="{{ method.get_absolute_url }}" style="font-size:0.8rem;color:var(--teal);text-decoration:none;display:inline-flex;align-items:center;gap:5px;">{% trans "بیشتر بخوانید" %} <span>›</span></a>
       </div>
       {% endfor %}
     </div>
 
     <!-- Big CTA -->
-    <div style="background:linear-gradient(135deg,rgba(45,212,172,0.08),rgba(232,184,75,0.06));border:1px solid rgba(45,212,172,0.15);border-radius:24px;padding:56px;text-align:center;position:relative;overflow:hidden;">
-      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(45,212,172,0.06),transparent 60%);pointer-events:none;"></div>
-      <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:10px;position:relative;">{% trans "آماده‌ی شروع هستید؟" %}</h2>
-      <p style="font-size:0.95rem;color:rgba(245,240,232,0.5);margin-bottom:28px;position:relative;">{% trans "اولین قدم را با یک جلسه ارزیابی با دکتر اکبرزاده بردارید" %}</p>
-      <a href="{% url 'scheduling:book_entry' %}" class="btn-primary" style="font-size:1rem;padding:14px 36px;position:relative;">{% trans "رزرو اولین جلسه" %}</a>
+    <div class="surface" style="border:1px solid rgba(45,212,172,0.15);border-radius:var(--radius-2xl);padding:var(--space-10);text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(45,212,172,0.05),transparent 60%);pointer-events:none;"></div>
+      <h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;margin-bottom:var(--space-2);position:relative;z-index:1;">{% trans "آماده‌ی شروع هستید؟" %}</h2>
+      <p style="font-size:0.95rem;color:var(--cream-dim);margin-bottom:var(--space-6);position:relative;z-index:1;">{% trans "اولین قدم را با یک جلسه ارزیابی با دکتر اکبرزاده بردارید" %}</p>
+      <a href="{% url 'scheduling:book_entry' %}" class="btn btn-primary" style="font-size:1rem;padding:14px 36px;position:relative;z-index:1;">{% trans "رزرو اولین جلسه" %}</a>
     </div>
   </div>
 </section>
 
 <!-- ── ADMIN-CONFIGURABLE SECTIONS ───────────────────────────────────────── -->
 {% for section in extra_sections %}
-<section style="padding:80px 0;background:{{ section.background_color }};color:{{ section.text_color }};">
+<section style="padding:var(--space-16) 0;background:{{ section.background_color }};color:{{ section.text_color }};">
   <div class="section">
-    <div style="display:grid;grid-template-columns:{% if section.image %}1fr 1fr{% else %}1fr{% endif %};gap:48px;align-items:center;">
+    <div style="display:grid;grid-template-columns:{% if section.image %}1fr 1fr{% else %}1fr{% endif %};gap:var(--space-12);align-items:center;">
       <div>
-        <h2 style="font-size:1.8rem;font-weight:800;margin-bottom:14px;">{{ section.heading }}</h2>
+        <h2 style="font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;margin-bottom:var(--space-3);">{{ section.heading }}</h2>
         <p style="font-size:0.95rem;line-height:1.9;opacity:0.75;">{{ section.body }}</p>
         {% if section.cta_label %}
-        <a href="{{ section.cta_url|default:'#' }}" class="btn-primary" style="margin-top:24px;display:inline-flex;">{{ section.cta_label }}</a>
+        <a href="{{ section.cta_url|default:'#' }}" class="btn btn-primary" style="margin-top:var(--space-6);display:inline-flex;">{{ section.cta_label }}</a>
         {% endif %}
       </div>
       {% if section.image %}
-      <div style="border-radius:20px;overflow:hidden;"><img src="{{ section.image.url }}" style="width:100%;object-fit:cover;" alt="{{ section.heading }}"></div>
+      <div style="border-radius:var(--radius-xl);overflow:hidden;"><img src="{{ section.image.url }}" style="width:100%;object-fit:cover;" alt="{{ section.heading }}"></div>
       {% endif %}
     </div>
   </div>
@@ -204,62 +196,6 @@
 
 {% block extra_js %}
 <script>
-// ── Animated gradient mesh — mimics Bobbin's living background ──────────────
-(function () {
-  var canvas = document.createElement('canvas');
-  var ctx = canvas.getContext('2d');
-  var mesh = document.getElementById('heroMesh');
-  mesh.appendChild(canvas);
-
-  function resize() {
-    canvas.width  = mesh.offsetWidth  || window.innerWidth;
-    canvas.height = mesh.offsetHeight || window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Orbs that drift around
-  var orbs = [
-    { x: 0.15, y: 0.3,  r: 0.55, color: [45, 212, 172],  speed: 0.00018, phase: 0 },
-    { x: 0.75, y: 0.6,  r: 0.5,  color: [232, 184, 75],   speed: 0.00013, phase: 2 },
-    { x: 0.5,  y: 0.85, r: 0.45, color: [100, 80, 200],   speed: 0.00021, phase: 4.5 },
-    { x: 0.85, y: 0.1,  r: 0.4,  color: [45, 180, 200],   speed: 0.00016, phase: 1.2 },
-  ];
-
-  var start = performance.now();
-
-  function draw(ts) {
-    var elapsed = ts - start;
-    var W = canvas.width, H = canvas.height;
-
-    ctx.clearRect(0, 0, W, H);
-
-    // Deep ink base
-    ctx.fillStyle = '#0D0D0F';
-    ctx.fillRect(0, 0, W, H);
-
-    // Draw each drifting orb
-    orbs.forEach(function (o) {
-      var t = elapsed * o.speed + o.phase;
-      // Gentle figure-eight drift
-      var cx = (o.x + Math.sin(t) * 0.18) * W;
-      var cy = (o.y + Math.cos(t * 1.3) * 0.14) * H;
-      var radius = o.r * Math.max(W, H);
-
-      var grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-      grad.addColorStop(0,   'rgba(' + o.color.join(',') + ',0.18)');
-      grad.addColorStop(0.4, 'rgba(' + o.color.join(',') + ',0.07)');
-      grad.addColorStop(1,   'rgba(' + o.color.join(',') + ',0)');
-
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-    });
-
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
-})();
-
 // ── Slideshow ──────────────────────────────────────────────────────────────
 var _slideIdx = 0;
 var _slides = document.querySelectorAll('[data-slide]');
@@ -268,12 +204,16 @@ var _dots   = document.querySelectorAll('[data-dot]');
 function goSlide(i) {
   if (_slides.length < 2) return;
   _slides[_slideIdx].style.display = 'none';
-  _dots[_slideIdx].style.width = '6px';
-  _dots[_slideIdx].style.background = 'rgba(255,255,255,0.2)';
+  if (_dots[_slideIdx]) {
+    _dots[_slideIdx].style.width = '6px';
+    _dots[_slideIdx].style.background = 'var(--cream-dim-3)';
+  }
   _slideIdx = i;
   _slides[_slideIdx].style.display = 'block';
-  _dots[_slideIdx].style.width = '20px';
-  _dots[_slideIdx].style.background = 'var(--teal)';
+  if (_dots[_slideIdx]) {
+    _dots[_slideIdx].style.width = '20px';
+    _dots[_slideIdx].style.background = 'var(--teal)';
+  }
 }
 
 if (_slides.length > 1) {

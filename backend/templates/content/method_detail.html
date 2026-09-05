@@ -3,25 +3,24 @@
 {% block title %}{{ method.name }} — {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<section style="padding:60px 0 100px;position:relative;overflow:hidden;">
-  <div class="glow-teal" style="top:-80px;{% if SITE_DIR == 'rtl' %}right:-200px{% else %}left:-200px{% endif %};opacity:0.35;"></div>
-  <div style="max-width:680px;margin:0 auto;padding:0 24px;position:relative;z-index:1;">
-    <a href="{% url 'core:home' %}" style="font-size:0.8rem;color:rgba(245,240,232,0.35);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;transition:color 0.2s;" onmouseover="this.style.color='rgba(245,240,232,0.7)'" onmouseout="this.style.color='rgba(245,240,232,0.35)'">
+<section style="padding:var(--space-16) 0 var(--space-20);">
+  <div style="max-width:680px;margin:0 auto;padding:0 var(--space-6);">
+    <a href="{% url 'core:home' %}" style="font-size:0.8rem;color:var(--cream-dim);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:var(--space-6);transition:color var(--transition-fast);" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim)'">
       {% if SITE_DIR == 'rtl' %}›{% else %}‹{% endif %} {% trans "بازگشت" %}
     </a>
 
-    <div style="width:52px;height:52px;background:rgba(45,212,172,0.1);border:1px solid rgba(45,212,172,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:20px;">{{ method.icon_emoji }}</div>
-    <h1 style="font-size:2rem;font-weight:800;margin-bottom:10px;">{{ method.name }}</h1>
-    <p style="font-size:1rem;color:rgba(245,240,232,0.55);line-height:1.8;margin-bottom:36px;">{{ method.teaser }}</p>
+    <div style="width:48px;height:48px;background:var(--teal-dim);border:1px solid rgba(45,212,172,0.25);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:var(--space-5);">{{ method.icon_emoji }}</div>
+    <h1 style="font-size:clamp(1.75rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:var(--space-2);">{{ method.name }}</h1>
+    <p style="font-size:1rem;color:var(--cream-dim);line-height:1.8;margin-bottom:var(--space-8);">{{ method.teaser }}</p>
 
-    <div class="glass" style="border-radius:20px;padding:36px;font-size:0.9rem;line-height:2.1;color:rgba(245,240,232,0.7);margin-bottom:36px;">
+    <div class="surface" style="border-radius:var(--radius-2xl);padding:var(--space-8);font-size:0.95rem;line-height:2.2;color:var(--cream-dim);margin-bottom:var(--space-8);">
       {{ method.full_description|linebreaks }}
     </div>
 
-    <div style="background:linear-gradient(135deg,rgba(45,212,172,0.07),rgba(232,184,75,0.05));border:1px solid rgba(45,212,172,0.14);border-radius:20px;padding:36px;text-align:center;">
-      <div style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">{% trans "می‌خواهید با این رویکرد کار کنید؟" %}</div>
-      <p style="font-size:0.875rem;color:rgba(245,240,232,0.45);margin-bottom:20px;">{% trans "اولین جلسه ارزیابی را رزرو کنید" %}</p>
-      <a href="{% url 'scheduling:book_entry' %}" class="btn-primary" style="font-size:0.9rem;padding:12px 32px;">{% trans "رزرو اولین جلسه" %}</a>
+    <div class="surface-elevated" style="border-radius:var(--radius-2xl);padding:var(--space-8);text-align:center;">
+      <h2 style="font-size:1.25rem;font-weight:700;margin-bottom:var(--space-2);color:var(--cream);">{% trans "می‌خواهید با این رویکرد کار کنید؟" %}</h2>
+      <p style="font-size:0.875rem;color:var(--cream-dim);margin-bottom:var(--space-6);">{% trans "اولین جلسه ارزیابی را رزرو کنید" %}</p>
+      <a href="{% url 'scheduling:book_entry' %}" class="btn btn-primary" style="font-size:0.9rem;padding:12px 32px;">{% trans "رزرو اولین جلسه" %}</a>
     </div>
   </div>
 </section>

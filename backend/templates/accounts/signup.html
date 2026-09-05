@@ -3,62 +3,61 @@
 {% block title %}{% trans "ثبت‌نام" %} — {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<section style="min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden;">
-  <div class="glow-amber" style="top:20%;{% if SITE_DIR == 'rtl' %}left:-200px{% else %}right:-200px{% endif %};opacity:0.5;"></div>
-  <div style="width:100%;max-width:460px;position:relative;z-index:1;">
-    <div style="text-align:center;margin-bottom:32px;">
-      <div style="font-size:1.6rem;font-weight:800;margin-bottom:6px;" class="grad-text-amber">{{ SITE_NAME }}</div>
-      <h1 style="font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;">{% trans "ایجاد حساب کاربری" %}</h1>
-      <p style="font-size:0.85rem;color:rgba(245,240,232,0.4);">{% trans "اولین قدم به سوی خودت" %}</p>
+<section style="min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:var(--space-10) var(--space-6);">
+  <div style="width:100%;max-width:440px;">
+    <div style="text-align:center;margin-bottom:var(--space-8);">
+      <div style="font-size:1.4rem;font-weight:800;margin-bottom:var(--space-2);color:var(--amber);">{{ SITE_NAME }}</div>
+      <h1 style="font-size:1.25rem;font-weight:700;color:var(--cream);margin-bottom:var(--space-1);">{% trans "ایجاد حساب کاربری" %}</h1>
+      <p style="font-size:0.875rem;color:var(--cream-dim);">{% trans "اولین قدم به سوی خودت" %}</p>
     </div>
 
-    <div class="glass-strong" style="border-radius:24px;padding:32px;">
+    <div class="surface-elevated" style="border-radius:var(--radius-2xl);padding:var(--space-8);">
       <!-- Tabs -->
-      <div style="display:flex;border-bottom:1px solid var(--glass-border);margin-bottom:28px;">
-        <a href="{% url 'accounts:login' %}" style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:rgba(245,240,232,0.35);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s;" onmouseover="this.style.color='rgba(245,240,232,0.65)'" onmouseout="this.style.color='rgba(245,240,232,0.35)'">{% trans "ورود" %}</a>
-        <span style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:var(--teal);border-bottom:2px solid var(--teal);">{% trans "ثبت‌نام" %}</span>
+      <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:var(--space-6);">
+        <a href="{% url 'accounts:login' %}" style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:var(--cream-dim-2);text-decoration:none;border-bottom:2px solid transparent;transition:color var(--transition-fast);" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim-2)'">{% trans "ورود" %}</a>
+        <span style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:var(--teal);border-bottom:2px solid var(--teal);font-weight:600;">{% trans "ثبت‌نام" %}</span>
       </div>
 
-      <form id="signupForm" novalidate style="display:flex;flex-direction:column;gap:14px;">
+      <form id="signupForm" novalidate style="display:flex;flex-direction:column;gap:var(--space-3);">
         {% csrf_token %}
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
           <div>
-            <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "نام" %}</label>
+            <label class="label">{% trans "نام" %}</label>
             <input type="text" name="first_name" required class="field">
           </div>
           <div>
-            <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "نام خانوادگی" %}</label>
+            <label class="label">{% trans "نام خانوادگی" %}</label>
             <input type="text" name="last_name" required class="field">
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
           <div>
-            <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "سن" %}</label>
+            <label class="label">{% trans "سن" %}</label>
             <input type="number" name="age" min="12" max="120" required class="field">
           </div>
           <div>
-            <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "شغل" %} ({% trans "اختیاری" %})</label>
+            <label class="label">{% trans "شغل" %} ({% trans "اختیاری" %})</label>
             <input type="text" name="occupation" class="field">
           </div>
         </div>
         <div>
-          <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "شماره موبایل" %}</label>
+          <label class="label">{% trans "شماره موبایل" %}</label>
           <input type="tel" name="phone_number" required placeholder="+989123456789" class="field" style="direction:ltr;">
-          <p style="font-size:0.72rem;color:rgba(245,240,232,0.25);margin-top:5px;">{% trans "با کد کشور: +989123456789" %}</p>
+          <p style="font-size:0.75rem;color:var(--cream-dim-3);margin-top:4px;">{% trans "با کد کشور: +989123456789" %}</p>
         </div>
         <div>
-          <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "ایمیل" %}</label>
+          <label class="label">{% trans "ایمیل" %}</label>
           <input type="email" name="email" required class="field" style="direction:ltr;">
         </div>
         <div>
-          <label style="display:block;font-size:0.78rem;color:rgba(245,240,232,0.5);margin-bottom:7px;">{% trans "رمز عبور" %}</label>
+          <label class="label">{% trans "رمز عبور" %}</label>
           <input type="password" name="password" required minlength="8" placeholder="{% trans 'حداقل ۸ کاراکتر' %}" class="field">
         </div>
 
-        <div id="signupError" style="display:none;font-size:0.82rem;color:#fca5a5;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:10px 14px;"></div>
-        <div id="signupSuccess" style="display:none;font-size:0.82rem;color:var(--teal);background:rgba(45,212,172,0.1);border:1px solid rgba(45,212,172,0.25);border-radius:10px;padding:10px 14px;"></div>
+        <div id="signupError" style="display:none;font-size:0.82rem;color:#fca5a5;background:var(--red-dim);border:1px solid rgba(239,68,68,0.25);border-radius:var(--radius-md);padding:10px 14px;"></div>
+        <div id="signupSuccess" style="display:none;font-size:0.82rem;color:var(--teal);background:var(--teal-dim);border:1px solid rgba(45,212,172,0.25);border-radius:var(--radius-md);padding:10px 14px;"></div>
 
-        <button type="submit" id="submitBtn" class="btn-primary" style="width:100%;justify-content:center;padding:13px;font-size:0.9rem;margin-top:4px;">
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:0.9rem;margin-top:var(--space-2);">
           <span id="submitLabel">{% trans "ایجاد حساب کاربری" %}</span>
           <span id="submitSpinner" style="display:none;width:16px;height:16px;border:2px solid rgba(13,13,15,0.4);border-top-color:var(--ink);border-radius:50%;animation:spin 0.7s linear infinite;"></span>
         </button>
@@ -104,7 +103,6 @@
       var nfe = data.non_field_errors;
       return Array.isArray(nfe) ? nfe[0] : String(nfe);
     }
-    // DRF field errors: {field: ["msg", ...], ...}
     var entries = Object.entries(data);
     if (!entries.length) return '{% trans "خطای ناشناخته — لطفاً دوباره تلاش کنید." %}';
     var fieldMap = {

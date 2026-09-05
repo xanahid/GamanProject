@@ -3,42 +3,41 @@
 {% block title %}{% trans "ورود" %} — {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<section style="min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;overflow:hidden;">
-  <div class="glow-teal" style="top:20%;{% if SITE_DIR == 'rtl' %}right:-200px{% else %}left:-200px{% endif %};opacity:0.5;"></div>
-  <div style="width:100%;max-width:420px;position:relative;z-index:1;">
-    <div style="text-align:center;margin-bottom:32px;">
-      <div style="font-size:1.6rem;font-weight:800;margin-bottom:6px;" class="grad-text-amber">{{ SITE_NAME }}</div>
-      <h1 style="font-size:1.3rem;font-weight:700;color:var(--cream);margin-bottom:6px;">{% trans "خوش آمدید" %}</h1>
-      <p style="font-size:0.85rem;color:rgba(245,240,232,0.4);">{% trans "با ایمیل یا شماره موبایل وارد شوید" %}</p>
+<section style="min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:var(--space-10) var(--space-6);">
+  <div style="width:100%;max-width:400px;">
+    <div style="text-align:center;margin-bottom:var(--space-8);">
+      <div style="font-size:1.4rem;font-weight:800;margin-bottom:var(--space-2);color:var(--amber);">{{ SITE_NAME }}</div>
+      <h1 style="font-size:1.25rem;font-weight:700;color:var(--cream);margin-bottom:var(--space-1);">{% trans "خوش آمدید" %}</h1>
+      <p style="font-size:0.875rem;color:var(--cream-dim);">{% trans "با ایمیل یا شماره موبایل وارد شوید" %}</p>
     </div>
 
-    <div class="glass-strong" style="border-radius:24px;padding:32px;">
+    <div class="surface-elevated" style="border-radius:var(--radius-2xl);padding:var(--space-8);">
       <!-- Tabs -->
-      <div style="display:flex;border-bottom:1px solid var(--glass-border);margin-bottom:28px;">
-        <span style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:var(--teal);border-bottom:2px solid var(--teal);">{% trans "ورود" %}</span>
-        <a href="{% url 'accounts:signup' %}" style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:rgba(245,240,232,0.35);text-decoration:none;border-bottom:2px solid transparent;transition:color 0.2s;" onmouseover="this.style.color='rgba(245,240,232,0.65)'" onmouseout="this.style.color='rgba(245,240,232,0.35)'">{% trans "ثبت‌نام" %}</a>
+      <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:var(--space-6);">
+        <span style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:var(--teal);border-bottom:2px solid var(--teal);font-weight:600;">{% trans "ورود" %}</span>
+        <a href="{% url 'accounts:signup' %}" style="flex:1;text-align:center;padding-bottom:12px;font-size:0.875rem;color:var(--cream-dim-2);text-decoration:none;border-bottom:2px solid transparent;transition:color var(--transition-fast);" onmouseover="this.style.color='var(--cream)'" onmouseout="this.style.color='var(--cream-dim-2)'">{% trans "ثبت‌نام" %}</a>
       </div>
 
       <form method="post">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
 
-        <div style="margin-bottom:16px;">
-          <label style="display:block;font-size:0.8rem;color:rgba(245,240,232,0.5);margin-bottom:8px;">{% trans "شماره موبایل یا ایمیل" %}</label>
+        <div style="margin-bottom:var(--space-4);">
+          <label class="label">{% trans "شماره موبایل یا ایمیل" %}</label>
           <input type="text" name="identifier" required class="field" placeholder="09xx xxx xxxx" autofocus>
         </div>
 
-        <div style="margin-bottom:24px;">
-          <label style="display:block;font-size:0.8rem;color:rgba(245,240,232,0.5);margin-bottom:8px;">{% trans "رمز عبور" %}</label>
+        <div style="margin-bottom:var(--space-6);">
+          <label class="label">{% trans "رمز عبور" %}</label>
           <input type="password" name="password" required class="field" placeholder="••••••••">
         </div>
 
-        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:13px;font-size:0.9rem;">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:0.9rem;">
           {% trans "ورود به گمان" %}
         </button>
       </form>
 
-      <p style="font-size:0.8rem;color:rgba(245,240,232,0.3);text-align:center;margin-top:16px;cursor:pointer;" onmouseover="this.style.color='rgba(245,240,232,0.6)'" onmouseout="this.style.color='rgba(245,240,232,0.3)'">{% trans "رمز عبور را فراموش کرده‌ام" %}</p>
+      <p style="font-size:0.8rem;color:var(--cream-dim-3);text-align:center;margin-top:var(--space-5);cursor:pointer;transition:color var(--transition-fast);" onmouseover="this.style.color='var(--cream-dim)'" onmouseout="this.style.color='var(--cream-dim-3)'">{% trans "رمز عبور را فراموش کرده‌ام" %}</p>
     </div>
   </div>
 </section>

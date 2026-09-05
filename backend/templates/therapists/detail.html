@@ -3,22 +3,21 @@
 {% block title %}{{ therapist.user.get_full_name }} — {{ SITE_NAME }}{% endblock %}
 
 {% block content %}
-<section style="padding:80px 0;position:relative;overflow:hidden;">
-  <div class="glow-amber" style="top:-100px;{% if SITE_DIR == 'rtl' %}right:-200px{% else %}left:-200px{% endif %};"></div>
-  <div class="section" style="max-width:760px;position:relative;z-index:1;">
-    <div class="glass-strong" style="border-radius:28px;overflow:hidden;">
+<section style="padding:var(--space-16) 0 var(--space-20);">
+  <div class="section" style="max-width:760px;">
+    <div class="surface-elevated" style="border-radius:var(--radius-2xl);overflow:hidden;">
 
       <!-- Header band -->
-      <div style="background:linear-gradient(135deg,rgba(45,212,172,0.08),rgba(232,184,75,0.06));padding:40px;display:flex;gap:28px;align-items:center;border-bottom:1px solid var(--glass-border);">
-        <div style="width:96px;height:96px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,0.06);border:2px solid var(--glass-border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">
-          {% if therapist.photo %}<img src="{{ therapist.photo.url }}" style="width:100%;height:100%;object-fit:cover;" alt="{{ therapist.user.get_full_name }}">{% else %}👤{% endif %}
+      <div style="padding:var(--space-8);display:flex;gap:var(--space-6);align-items:center;border-bottom:1px solid var(--border);flex-wrap:wrap;">
+        <div style="width:88px;height:88px;border-radius:var(--radius-full);overflow:hidden;background:var(--surface);border:2px solid var(--border-strong);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:2.5rem;">
+          {% if therapist.photo %}<img src="{{ therapist.photo.url }}" style="width:100%;height:100%;object-fit:cover;" alt="{{ therapist.user.get_full_name }}">{% else %}<span aria-hidden="true">👤</span>{% endif %}
         </div>
         <div>
-          <h1 style="font-size:1.6rem;font-weight:800;color:var(--cream);margin-bottom:6px;">{{ therapist.user.get_full_name }}</h1>
+          <h1 style="font-size:1.5rem;font-weight:800;color:var(--cream);margin-bottom:var(--space-1);">{{ therapist.user.get_full_name }}</h1>
           {% if therapist.is_head_of_institute %}
-          <span class="pill" style="background:rgba(232,184,75,0.15);border-color:rgba(232,184,75,0.3);color:var(--amber);font-size:0.75rem;margin-bottom:8px;display:inline-block;">✦ {% trans "روانپزشک — مدیر مرکز" %}</span>
+          <span class="pill pill-amber" style="font-size:0.75rem;margin-bottom:var(--space-2);display:inline-flex;">✦ {% trans "روانپزشک — مدیر مرکز" %}</span>
           {% endif %}
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;">
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-2);">
             {% for s in therapist.specialties.all %}
             <span class="pill pill-teal" style="font-size:0.72rem;">{{ s.name }}</span>
             {% endfor %}
@@ -27,41 +26,41 @@
       </div>
 
       <!-- Stats -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--glass-border);">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);">
         {% for label, value in stats %}
-        <div style="padding:24px;text-align:center;{% if not forloop.last %}border-{% if SITE_DIR == 'rtl' %}left{% else %}right{% endif %}:1px solid var(--glass-border);{% endif %}">
-          <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber ltr">{{ value }}</div>
-          <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{{ label }}</div>
+        <div style="padding:var(--space-5) var(--space-4);text-align:center;{% if not forloop.last %}border-{% if SITE_DIR == 'rtl' %}left{% else %}right{% endif %}:1px solid var(--border);{% endif %}">
+          <div style="font-size:1.5rem;font-weight:800;color:var(--amber);" class="ltr">{{ value }}</div>
+          <div style="font-size:0.78rem;color:var(--cream-dim);margin-top:var(--space-1);">{{ label }}</div>
         </div>
         {% empty %}
-        <div style="padding:24px;text-align:center;">
-          <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber ltr">{{ therapist.years_active }}</div>
-          <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "سال سابقه" %}</div>
+        <div style="padding:var(--space-5) var(--space-4);text-align:center;">
+          <div style="font-size:1.5rem;font-weight:800;color:var(--amber);" class="ltr">{{ therapist.years_active }}</div>
+          <div style="font-size:0.78rem;color:var(--cream-dim);margin-top:var(--space-1);">{% trans "سال سابقه" %}</div>
         </div>
-        <div style="padding:24px;text-align:center;border-{% if SITE_DIR == 'rtl' %}left{% else %}right{% endif %}:1px solid var(--glass-border);border-{% if SITE_DIR == 'rtl' %}right{% else %}left{% endif %}:1px solid var(--glass-border);">
-          <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber ltr">{{ therapist.active_client_count }}</div>
-          <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "مراجع فعال" %}</div>
+        <div style="padding:var(--space-5) var(--space-4);text-align:center;border-{% if SITE_DIR == 'rtl' %}left{% else %}right{% endif %}:1px solid var(--border);border-{% if SITE_DIR == 'rtl' %}right{% else %}left{% endif %}:1px solid var(--border);">
+          <div style="font-size:1.5rem;font-weight:800;color:var(--amber);" class="ltr">{{ therapist.active_client_count }}</div>
+          <div style="font-size:0.78rem;color:var(--cream-dim);margin-top:var(--space-1);">{% trans "مراجع فعال" %}</div>
         </div>
-        <div style="padding:24px;text-align:center;">
-          <div style="font-size:1.8rem;font-weight:800;" class="grad-text-amber ltr">{{ SESSION_DURATION_MINUTES }}</div>
-          <div style="font-size:0.78rem;color:rgba(245,240,232,0.4);margin-top:4px;">{% trans "دقیقه هر جلسه" %}</div>
+        <div style="padding:var(--space-5) var(--space-4);text-align:center;">
+          <div style="font-size:1.5rem;font-weight:800;color:var(--amber);" class="ltr">{{ SESSION_DURATION_MINUTES }}</div>
+          <div style="font-size:0.78rem;color:var(--cream-dim);margin-top:var(--space-1);">{% trans "دقیقه هر جلسه" %}</div>
         </div>
         {% endfor %}
       </div>
 
       <!-- Bio -->
-      <div style="padding:32px;">
-        <p style="font-size:0.9rem;line-height:2;color:rgba(245,240,232,0.65);">{{ therapist.full_bio }}</p>
+      <div style="padding:var(--space-8);">
+        <p style="font-size:0.9rem;line-height:2;color:var(--cream-dim);">{{ therapist.full_bio }}</p>
       </div>
 
       <!-- CTA -->
-      <div style="padding:0 32px 32px;">
+      <div style="padding:0 var(--space-8) var(--space-8);">
         {% if user.is_authenticated and user.is_client %}
-        <a href="{% url 'scheduling:client_schedule' therapist.pk %}" class="btn-primary" style="width:100%;justify-content:center;font-size:0.95rem;padding:14px;">
+        <a href="{% url 'scheduling:client_schedule' therapist.pk %}" class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.95rem;padding:14px;">
           {% blocktrans with name=therapist.user.get_full_name %}رزرو جلسه با {{ name }}{% endblocktrans %}
         </a>
         {% elif not user.is_authenticated %}
-        <a href="{% url 'accounts:login' %}?next={% url 'scheduling:client_schedule' therapist.pk %}" class="btn-primary" style="width:100%;justify-content:center;font-size:0.95rem;padding:14px;">
+        <a href="{% url 'accounts:login' %}?next={% url 'scheduling:client_schedule' therapist.pk %}" class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.95rem;padding:14px;">
           {% trans "برای رزرو جلسه وارد شوید" %}
         </a>
         {% endif %}
